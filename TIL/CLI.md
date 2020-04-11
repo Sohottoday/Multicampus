@@ -31,7 +31,8 @@ Command Line Interface(명령어 인터페이스) ->개발자의 진정한 간�
 
 - `rm -r` : 폴더 자체를 지워버림 = `rm -rf`
 
-- 리눅스 시스템에서의 . 은 숨김이라는 뜻
+  - 리눅스 시스템에서의 . 은 숨김이라는 뜻
+  - `rm -rf .git` : 마스터상태 해제
 
 - code : vsc open
 
@@ -47,4 +48,20 @@ Command Line Interface(명령어 인터페이스) ->개발자의 진정한 간�
   - 보통 repository의 주소를 복사해서 붙여넣는다.
   - ex)git remote add origin https://github.com/Sohottoday/githum-~~~
 - `git push \[저장소의 이름][브랜치의 이름]`
+  
   - ex) git push origin master
+
+
+
+- `git branch` : 생성되어 있는 모든 브랜치들의 목록을 보여주는 명령어
+
+- `git branch [브랜치의 이름]` : 브랜치를 생성하는 명령어
+
+- `git checkout [브랜치의 이름]` : 브랜치를 이동 = (git switch [브랜치의 이름])
+- `git branch -D [브랜치의 이름]` :브랜치를 삭제
+- `git merge [브랜치의 이름]` : 대상 브랜치를 마스터(현재 위치)로 병합시킴.
+- `git checkout -b [브랜치의 이름]` : 브랜치 생성 & 이동
+
+
+
+- `touch [파일명] : 파일을 생성함` 
