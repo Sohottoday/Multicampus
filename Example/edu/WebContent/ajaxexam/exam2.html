@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>JavaScript로 구현하는 Ajax 프로그램-XML</h1>
+<hr>
+<script>
+window.onload = function() {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function() {
+		if(request.readyState == 4) {
+			if(request.status == 200) {
+				var xml = request.responseXML;
+				//alert(xml);
+				var rootE = xml.getElementsByTagName("testxml");
+				var output = "";
+				//alert(rootE[0].childNodes.length);
+				for(var i=1;i <rootE[0].childNodes.length; i+=2) //엔터나 들여쓰기 공백도 DOM객체로 보기때문에 +2
+				output += "<h2>"+
+					   rootE[0].childNodes[i].firstChild.nodeValue
+					   +"</h2>";
+				alert(output);
+				document.body.innerHTML += output;	   
+			}
+		}		
+	}
+	request.open("GET", "content/testxml.xml", true);
+	request.send();
+}
+</script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2></h2>
+	<button>빨강색</button>
+	<button>파랑색</button>
+	<button>노랑색</button>
+	
+	<script>
+		var ffind = document.getElementsByTagName("h2")[0];
+		var d = new Date();
+		ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+		var bbuutt1 = document.querySelectorAll("button")[0];
+		var bbuutt2 = document.querySelectorAll("button")[1];
+		var bbuutt3 = document.querySelectorAll("button")[2];
+		function rred() {
+			ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+			ffind.style.color="red";
+		}
+		function bblue() {
+			ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+			ffind.style.color='blue';
+		}
+		function yyellow() {
+			ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+			ffind.style.color='yellow';
+		}
+		bbuutt1.addEventListener("click",rred);
+		bbuutt2.addEventListener("click",bblue);
+		bbuutt3.addEventListener("click",yyellow);
+	</script>
+</body>
+</html>
+

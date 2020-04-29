@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	h1 {
+		text-align : center;
+		padding : 10px;
+	}
+	img {
+		box-shadow : 5px 5px 10px black;
+		margin : 10px;
+	}
+	#angry {
+		width : 300px;
+		height : 300px;
+		border-radius : 20px;
+		background-color : #3399ff;
+		color : white;
+		padding: 5px;
+		margin-left : auto;
+		margin-right : auto;
+	}
+	section {
+		text-align : center;
+	}
+	#writehear {
+		text-align : left;
+	}
+	#destroy {
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+<h1>컴퓨터나라</h1>
+<hr>
+
+<figure>
+	<div>
+	<img src="http://localhost:8000/edu/images/case.jpg" width="200" height="200" id="case" >
+	<img src="http://localhost:8000/edu/images/cpu.jpg" width="200" height="200" id="cpu">
+	<img src="http://localhost:8000/edu/images/headset.jpg" width="200" height="200" id="headset">
+	<img src="http://localhost:8000/edu/images/keyboard.jpg" width="200" height="200" id="keyboard">
+	<img src="http://localhost:8000/edu/images/mainboard.jpg" width="200" height="200" id="mainboard">
+	</div>
+	<div>
+	<img src="http://localhost:8000/edu/images/monitor.jpg" width="200" height="200" id="monitor">
+	<img src="http://localhost:8000/edu/images/mouse.jpg" width="200" height="200" id="mouse">
+	<img src="http://localhost:8000/edu/images/RTX 2080.jpg" width="200" height="200" id="RTX 2080">
+	<img src="http://localhost:8000/edu/images/speaker.jpg" width="200" height="200" id="speaker">
+	<img src="http://localhost:8000/edu/images/standmic.jpg" width="200" height="200" id="standmic">
+	</div>
+	<section id="angry">
+	<h2>선택한 상품</h2>
+	<hr>
+	<div>
+	<ul id='writehear'>
+	</ul>
+	</div>
+	</section>
+	<div id="destroy">
+	<input type="image" src="http://localhost:8000/edu/images/delete.png" width="200" height="200" onclick="delData();">
+	</div>
+</figure>
+<script>
+	 window.onload = function() {
+		var images = document.querySelectorAll("img");
+		for(var i=0 ; i<images.length ; i++){
+			images[i].addEventListener("click", getData);	
+		}
+	}
+	 var target = document.getElementById("writehear");
+	 var target2 = document.getElementById("destroy");
+	 //target2.innerHTML ="<input type=\"image\" src=\"http://localhost:8000/edu/images/delete.png\" width=\"200\" height=\"200\" onclick=\"delData();\">";
+	function getData() {
+		var xmlload = new XMLHttpRequest();
+		xmlload.onload=function() {
+			if(xmlload.status==200) {
+				var str = xmlload.responseText;
+				var obj = JSON.parse(str);
+				
+				target.innerHTML = "";
+				for(var pname in obj) {
+					if(obj[pname] == 0 || pname == "null" ) continue;
+					target.innerHTML += "<li>"+pname+ " : "+obj[pname]+"</li>";
+				}
+			}
+		};
+	//	target2.innerHTML ="<input type=\"image\" src=\"http://localhost:8000/edu/images/delete.png\" width=\"200\" height=\"200\" onclick=\"delData();\">";
+		xmlload.open('GET',"http://localhost:8000/sedu/basket2?action=click&pid="+this.id , true);
+		xmlload.send();
+	}
+	
+	function delData() {
+		//target2.innerHTML ="<input type=\"image\" src=\"http://localhost:8000/edu/images/delete.png\" width=\"200\" height=\"200\" onclick=\"delData();\">";
+		var xmlreq = new XMLHttpRequest();
+		xmlreq.onload = function() {
+			if(xmlreq.status==200) {
+				var str = xmlreq.responseText;
+				console.log(str);
+				var obj=JSON.parse(str);
+				target.innerHTML =obj.msg;
+			}
+		};
+		xmlreq.open('GET',"http://localhost:8000/sedu/basket2?action=destroy" , true);
+		console.log(this.id);
+		xmlreq.send();
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2></h2>
+	<button onclick="rred()">빨강색</button>
+	<button onclick="bblue()">파랑색</button>
+	<button onclick="yyellow()">노랑색</button>
+	
+	<script>
+		var ffind = document.getElementsByTagName("h2")[0];
+		var d = new Date();
+		ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+		
+		function rred() {
+			ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+			ffind.style.color="red";
+		}
+		function bblue() {
+			ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+			ffind.style.color='blue';
+		}
+		function yyellow() {
+			ffind.innerHTML="오늘은 "+d.getFullYear()+"년 "+(d.getMonth()+1)+"월 "+d.getDate()+"입니다.";
+			ffind.style.color='yellow';
+		}
+	</script>
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+	function printObject(p) {
+		if(typeof p != 'object') {
+			return;
+		}
+		document.write("<h3>tag : "+p.tag+"<br>color : "+p.color+"<br>msg : "+p.msg+"</h3>");
+	}
+	
+	var tcm1 = {
+			tag : 'a',
+			color : 'blue',
+			msg : 'Defines a hyperlink'
+	}
+	var tcm2 = {
+			tag : 'b',
+			color : 'purple',
+			msg : 'Defines bold text'
+	}
+	var tcm3 = {
+			tag : 'body',
+			color : 'red',
+			msg : 'Defines the document`s body'
+	}
+	var tcm4 = {
+			tag : 'div',
+			color : 'green',
+			msg : 'Defines a section in a document'
+	}
+	var tcm5 = {
+			tag : 'footer',
+			color : 'pink',
+			msg : 'Defines a footer for a document or section'
+	}
+	printObject(tcm1);
+	printObject(tcm2);
+	printObject(tcm3);
+	printObject(tcm4);
+	printObject(tcm5);
+	
+
+</script>
+</body>
+</html>

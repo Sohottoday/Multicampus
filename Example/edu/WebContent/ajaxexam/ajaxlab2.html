@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script src="https://maps.googleapis.com/maps/api/geocode/json?address="></script>
+	<script>
+	window.onload = function() {
+		document.getElementById('readbutton').addEventListener("click", getData);
+	};
+	
+	function getData() {
+		var writeloc = window.prompt("주소를 입력하시오");
+		var getkey = "AIzaSyD8k2DWC_7yFHCrH6LDR3RfITsmWMEqC8c";
+		var addr = "https://maps.googleapis.com/maps/api/geocode/json?address="+encodeURIComponent(writeloc)+"&key="+getkey;
+		var request = new XMLHttpRequest();
+		request.onload = function() {
+			if(request.status == 200) {
+				var str = request.responseText;
+				var obj = JSON.parse(str);
+				console.log(obj);
+				//var target = document.getElementById('output');
+				//target.innerHTML="변환된 위도와 경도 : "+obj.results[0].geometry.location.lat+":"+obj.results[0].geometry.location.lng+"<br>"
+				var output = "";
+				output = "<h3>변환된 위도와 경도 : "+ obj.results[0].geometry.location.lat+":"+obj.results[0].geometry.location.lng+"</h3>"
+				document.body.innerHTML = output;
+			}
+		};
+		request.open('GET',addr,true);
+		request.send();
+	}
+	
+	</script>
+</head>
+<body>
+	<h1>주소와 위도경도 변환 서비스</h1>
+	<hr>
+	<button id='readbutton'>주소 입력 버튼</button>
+	<!-- <h2 id='output'></h2> -->
+
+</body>
+</html>

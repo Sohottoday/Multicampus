@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	h2 {
+		color : blue;
+	}
+	span {
+		color : red;
+	}
+</style>
+</head>
+<body>
+
+<script>
+	while(true) {
+	var inn1 = window.prompt("첫번째 숫자를 입력하시오");
+	if(isNaN(inn1) || inn1 == '' || inn1 == null){
+		window.alert("첫번째 숫자를 다시 입력하시오");
+	} else {
+		break;
+	}
+	}
+	while(true) {
+		var inn2 = window.prompt("두번째 숫자를 입력하시오");
+		if(isNaN(inn2) || inn2 == '' || inn2 == null){
+			window.alert("두밴째 숫자를 다시 입력하시오");
+		} else {
+			break;
+		}
+		}
+	var inn3 = window.prompt("연산자를 입력하시오");
+	var result;
+	inn1 *=1;
+	inn2 *=1;
+	if(inn3 =='+'|| inn3 =='-'|| inn3 =='*'|| inn3 =='/'|| inn3 =='%'){
+		switch(inn3) {
+			case '+' : result=inn1+inn2;
+				break;
+			case '-' : result=inn1-inn2;
+				break;	
+			case '*' : result=inn1*inn2;
+				break;
+			case '/' : result=inn1/inn2;
+				break;
+			case '%' : result=inn1%inn2;
+				break;
+		}
+		document.writeln("<h2>"+inn1+"와 "+inn2+"의 "+inn3+"연산 결과는 "+result+"입니다</h2>");
+	} else {
+		document.writeln("<h2><span>+,-,*,/,%만 입력 가능</span></h2>");
+	}
+	
+</script>
+
+</body>
+</html>

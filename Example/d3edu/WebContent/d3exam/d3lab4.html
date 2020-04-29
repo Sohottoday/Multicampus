@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>실습3</title>
+<style>
+
+</style>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<h1>실습 3</h1>
+	<svg id="graph" width="500"></svg>
+	<script>
+	var dataSet = [];
+	d3.csv("mydata.csv", function(error, data) {
+			var dataSet = [];
+			for (var n = 0; n < data.length; n++) {
+				dataSet.push(parseInt(data[n].item2));
+			}
+			
+			var view = d3.scale.linear().domain(d3.extent(dataSet)).range(["yellow","blue"]);
+			console.log(d3.extent(dataSet));
+			d3.select("#graph").selectAll("rect").data(dataSet).enter().append(
+					"rect").attr("x", 0).attr("y", function(d, i) {
+				return i * 25;
+			}).attr("height", "20px").attr("width", function(d) {
+				return d + "px";
+			}).attr("fill", function(d){ 
+				console.log(view);
+				return view(d);
+			}).on("click", function(d){
+				alert(d);
+			})
+			
+		});
+		
+		
+	</script>
+
+
+</body>
+</html>

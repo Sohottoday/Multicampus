@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+<svg width="500px" height="500px">
+	<circle cx="200" cy="200" r="150" fill="#ffff99" stroke-linecap="round" stroke-width="2" stroke="blue" />
+	<path d="M100 150, C140 150, 140 150,140 100" stroke="black" fill="none" stroke-width="3" stroke-linecap="round" />
+	<path d="M140 100, C140 150 , 140 150,180 150" stroke="black" fill="none" stroke-width="3" stroke-linecap="round"/>
+	<path d="M100 150, C140 150 , 140 150,140 200" stroke="black" fill="none" stroke-width="3" stroke-linecap="round" />
+	<path d="M140 200, C140 150 , 140 150,180 150" stroke="black" fill="none" stroke-width="3" stroke-linecap="round" />
+	
+	<path d="M200 150, C240 150, 240 150,240 100" stroke="black" fill="none" stroke-width="3" stroke-linecap="round" />
+	<path d="M240 100, C240 150 , 240 150,280 150" stroke="black" fill="none" stroke-width="3" stroke-linecap="round" />
+	<path d="M200 150, C240 150 , 240 150,240 200" stroke="black" fill="none" stroke-width="3" stroke-linecap="round" />
+	<path d="M240 200, C240 150 , 240 150,280 150" stroke="black" fill="none" stroke-width="3" stroke-linecap="round" />
+	
+	<!-- <circle cx="190" cy="220" r="30" fill="red" stroke-linecap="round" stroke-width="2" stroke="yellow" /> -->
+	<line x1="160" y1="240" x2="220" y2="240" stroke="red" stroke-width="3" />
+	<path d="M160 240, C190 290, 190 290,220 240" stroke="red" fill="red" stroke-width="3" stroke-linecap="round" />	
+</svg>
+
+<svg width="500px" height="500px">
+	<circle cx="200" cy="200" r="150" fill="#ffff99" stroke-linecap="round" stroke-width="2" stroke="blue" />
+	<circle cx="130" cy="170" r="30" fill="black" />
+	<circle cx="270" cy="170" r="30" fill="black" />
+	<path d="M80 150, C120 120, 120 120,160 120" stroke="black" fill="none" stroke-width="10" stroke-linecap="round" />
+	
+	<path d="M320 150, C280 120, 280 120,240 120" stroke="black" fill="none" stroke-width="10" stroke-linecap="round" />
+	<path d="M160 240, C200 180, 200 180,240 240" stroke="black" fill="none" stroke-width="10" stroke-linecap="round" />
+	
+	<path d="M240 280,C270 150, 270 150 ,300 280" stroke="none" fill="blue" stroke-width="1" stroke-linecap="round" id="tear2" />
+	<circle cx="270" cy="280" r="30" fill="blue" id="tear" />
+</svg>
+<script>
+	
+	
+	var change = function(){ 
+		var rannum = Math.floor(Math.random()*4)+1;
+		var result="";
+		switch(rannum){
+		case 1 : result= "blue"
+		break;
+		case 2 : result= "purple"
+		break;
+		case 3 : result= "black"
+		break;
+		case 4 : result= "green"
+		}
+		return result;
+		}
+	var change2 = function() {
+		var rannum2 = Math.floor(Math.random()*4)+1;
+		var result2="";
+		switch(rannum2){
+		case 1 : result2= "M240 300, C270 150, 270 150,300 300"
+		break;
+		case 2 : result2= "M240 340, C270 150, 270 150,300 340"
+		break;
+		case 3 : result2= "M240 360, C270 150, 270 150,300 360"
+		break;
+		case 4 : result2= "M240 260, C270 150, 270 150,300 260"
+		}
+		return result2;
+	}
+	var change3 = function() {
+		var rannum3 = Math.floor(Math.random()*4)+1;
+		var result3="";
+		switch(rannum3){
+		case 1 : result3= "300"
+		break;
+		case 2 : result3= "320"
+		break;
+		case 3 : result3= "340"
+		break;
+		case 4 : result3= "280"
+		}
+		return result3;
+	}
+	
+	 var gogo = function() {
+		 d3.select("#tear").style("fill", change);
+		 d3.select("#tear2").style("fill", change);
+		/*  d3.select("#tear2").attr("d", change2); */
+		 d3.select("#tear").attr("cy", change3);
+	 }
+ 	
+	setInterval(gogo, 1000);
+ 	
+</script>
+
+</body>
+</html>

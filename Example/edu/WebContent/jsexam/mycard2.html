@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Drag and Drop</title>
+  <link rel="stylesheet" href="dragdrop.css">
+</head>
+<body>
+	<h1>HTML로 크리스마스 카드 만들기</h1>
+	<button onclick="saveAll();">저장하기</button>
+	<button onclick="delAll();">지우기</button>
+	<button onclick="restoreAll();">읽어오기</button>
+	<br>
+	<p>
+		<label>배경 칼라 설정 : <input type="color" id="background" onchange="backgroundColor()"/> </label>
+		<label>테두리 칼라 설정 : <input type="color" id="teduri" onchange="teduriColor()"/> </label>
+	</p>
+	<p>	
+		<label>메시지 칼라 설정 : <input type="color" id="message" onchange="messageColor()"/></label>
+		<label>입력 메시지 : <input type="text" id="sandMessage" onchange='messageColor()'/></label>
+	</p>
+  
+<section id="dropbox">
+    <canvas id="canvas" width="500" height="500" onclick='showOn(event);'></canvas>
+  </section>
+
+  <aside id="picturesbox">
+  	<div>
+		<img id="image1" src="/edu/images/kakao/g1.png" width="50px" height="50px">
+		<img id="image2" src="/edu/images/kakao/g2.png" width="50px" height="50px">
+		<img id="image3" src="/edu/images/kakao/g3.png" width="50px" height="50px">
+		<img id="image4" src="/edu/images/kakao/g4.png" width="50px" height="50px">
+		<img id="image5" src="/edu/images/kakao/g5.png" width="50px" height="50px">
+	</div>
+	<div>
+		<img id="image6" src="/edu/images/kakao/g6.png" width="50px" height="50px">
+		<img id="image7" src="/edu/images/kakao/g7.png" width="50px" height="50px">
+		<img id="image8" src="/edu/images/kakao/g8.png" width="50px" height="50px">
+		<img id="image9" src="/edu/images/kakao/g9.png" width="50px" height="50px">
+		<img id="image10" src="/edu/images/kakao/g10.png" width="50px" height="50px">
+	</div>
+	<div>	
+		<img id="image11" src="/edu/images/kakao/g11.png" width="50px" height="50px">
+		<img id="image12" src="/edu/images/kakao/g12.png" width="50px" height="50px">
+		<img id="image13" src="/edu/images/kakao/g13.png" width="50px" height="50px">
+		<img id="image14" src="/edu/images/kakao/g14.png" width="50px" height="50px">
+		<img id="image15" src="/edu/images/kakao/g15.png" width="50px" height="50px">
+		<img id="image16" src="/edu/images/kakao/g16.png" width="50px" height="50px">
+  	</div>
+  </aside>
+</body>
+  <script>
+	
+	var canvas, drop;
+	drop=document.getElementById('canvas');
+	canvas=drop.getContext('2d');
+	
+	function initiate(){
+  var images=document.querySelectorAll('#picturesbox > div');
+  for(var i=0; i<images.length; i++){
+	    images[i].addEventListener('dragstart', dragged, false);
+	    images[i].addEventListener('dragend', ending, false);
+		}
+
+	  drop.addEventListener('dragover', function(e){ e.preventDefault(); }, false);
+	  drop.addEventListener('drop', dropped, false);
+	}
+	function ending(e){
+	  elem=e.target;
+	}
+	function dragged(e){
+	  var elem=e.target;
+		e.dataTransfer.setData('aa', elem.getAttribute('id'));
+	  e.dataTransfer.setDragImage(e.target, 0, 0);
+	}
+
+	function dropped(e){
+	  e.preventDefault();
+	  var id=e.dataTransfer.getData('aa');
+	  var elem=document.getElementById(id);
+	  var posx=e.pageX-drop.offsetLeft;
+	  var posy=e.pageY-drop.offsetTop;
+		
+		//console.log(e.clientX);
+		//console.log(e.clientY);
+	  canvas.drawImage(elem,posx,posy,50,50);//, 70, 70);
+	  
+	}
+	
+	function backgroundColor() {
+		var v = document.getElementById('background').value;
+		canvas.fillStyle=v;
+		canvas.fillRect(0,0,500,500);
+		canvas.fill();
+		
+	}
+	function teduriColor() {
+		var w = document.getElementById('teduri').value;
+		canvas.strokeStyle=w;
+		canvas.strokeRect(0,0,500,500);
+		canvas.stroke();
+	}
+	var text='';
+	var color;
+	function messageColor() {
+		var x = document.getElementById('sandMessage').value;
+		var y = document.getElementById('message').value;
+		text = x;
+		color = y;
+	}
+	function showOn(e) {
+		var posx=e.pageX-drop.offsetLeft;
+		var posy=e.pageY-drop.offsetTop;
+		canvas.fillStyle=color;
+		canvas.font='20px 굴림'
+		canvas.fillText(text, posx, posy);
+		canvas.fill();
+	}
+	function saveAll() {
+		alert('저장되었습니다');
+		localStorage.setItem('canvas', drop.toDataURL());
+	}
+	function delAll() {
+		canvas.clearRect(0,0,500,500);
+	}
+	function restoreAll() {
+		var cardLoad = new Image();
+		cardLoad.src = localStorage.getItem('canvas');
+		cardLoad.onload = function() {
+			canvas.drawImage(cardLoad,0,0);
+		}
+		
+}
+
+window.addEventListener("load", initiate, false);
+  </script>
+</html>

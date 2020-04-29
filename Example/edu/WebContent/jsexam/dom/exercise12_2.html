@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>	
+	button {
+		width : 50px;
+		height : 50px;
+		border-radius : 10px;
+		text-align : center;
+		margin : 40px;
+	}
+	h3 {
+		text-align : center;
+	}
+	nav {
+		text-aligh : center;
+		
+	}
+	
+</style>
+</head>
+<body>
+	<h1>구구단</h1>
+	<nav>
+	<button id="1">1단</button>
+	<button id="2">2단</button>
+	<button id="3">3단</button>
+	<button id="4">4단</button>
+	<button id="5">5단</button>
+	<button id="6">6단</button>
+	<button id="7">7단</button>
+	<button id="8">8단</button>
+	<button id="9">9단</button>
+	</nav>
+	<h3></h3>
+	<script>
+	
+	var bbuutt = document.getElementsByTagName("button");
+	var gugu = document.getElementsByTagName("h3")[0];
+	
+	function guuu() {
+		var i=parseInt(this.id);
+		gugu.innerHTML = "";
+		for(var n=1 ; n<=9 ; ++n) {
+			gugu.innerHTML+=" * "+i+" x "+n+" = "+(i*n)+"<br>";
+		}
+	}
+	for (var v in bbuutt){
+		bbuutt[v].onclick=guuu;
+		}
+</script>		
+	
+</body>
+</html>
