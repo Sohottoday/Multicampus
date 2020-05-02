@@ -1,0 +1,12 @@
+library(KoNLP)
+koreasong <- readLines("c:/Sohottoday/Rstudy/hotel.txt")
+koreasong2 <-extractNoun(koreasong)
+koreasong3 <- unlist(koreasong2)
+koreasong3 <- gsub("[A-z[:punct:]]","",koreasong3)
+koreasong3 <- unlist(koreasong3)
+koreasong3 <- Filter(function(x){nchar(x)>=2}, koreasong3)
+result1 <- NULL
+result1 <- table(koreasong3)
+result2 <- sort(result1, decreasing = T)
+result3 <- head(result2, 10)
+result4 <- as.data.frame(result3)
