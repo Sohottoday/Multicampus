@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#target {
+		font-size : 1.5em;
+		color : red;
+	}
+</style>
+</head>
+<body>
+<h1>구매하고자 하는 상품을 선택하십시오.</h1>
+<hr>
+
+	<a href="/springedu/product?hanwoo1=1"><img src="http://localhost:8000/springedu/resources/images/001.jpg" width="200" height="200"></a>
+	<a href="/springedu/product?hanwoo2=1"><img src="http://localhost:8000/springedu/resources/images/002.jpg" width="200" height="200"></a>
+	<a href="/springedu/product?hanwoo3=1"><img src="http://localhost:8000/springedu/resources/images/003.png" width="200" height="200"></a>
+
+	<br><br>
+	<div>
+	<input type="image" src="http://localhost:8000/springedu/resources/images/clear.png" onclick='delData("del");'>
+	
+	</div>
+	
+	
+	<script>
+	function delData(p) {
+		var xmlreq = new XMLHttpRequest();
+		xmlreq.onload = function() {
+			if(xmlreq.status==200) {
+				var str = xmlreq.responseText;
+				var obj=JSON.parse(str);
+				alert(obj.msg);
+			}
+		}
+		xmlreq.open("GET", "http://localhost:8000/springedu/product?pid="+p,true);
+		xmlreq.send();
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script>
+ var sum = function (n1) {
+	 var result=0;
+	 if (typeof n1 == 'number') {
+	 for(var i =1 ; i<=n1 ; i++) {
+		 result += i
+	 }
+	 	document.writeln("<h2>호출 결과값 : "+result)
+	 } else {
+		 document.writeln("<h2>리턴값이 없어요!!</h2>");
+	 }
+}
+sum((Math.random()*5+1));
+sum();
+</script>
+
+
+</body>
+</html>

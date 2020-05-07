@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>소개 실습</title>
+<style>
+header {
+	background-image: linear-gradient(-30deg, #00ffcc, 	#66ff33, #0066ff);
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	padding : 30px;
+}
+h1 {
+	text-shadow: 5px 5px 10px black;
+	color: white;
+}
+a {text-decoration:none; 
+	margin : 20px;
+	}
+.li:hover {
+	font-weight: bold;
+}
+
+section {
+
+}
+
+article {
+	width : 70%;
+	border : 2px solid pink;
+	border-radius: 15px;
+	margin : 10px;
+	padding : 10px;
+	margin-left : auto;
+	margin-right : auto;
+}
+aside {
+	text-align : center;
+}
+footer {
+	width : 100%;
+	height : 80px;
+	background-color : black;
+	color : white;
+	text-align : center;
+	padding : 30px;
+}
+figure {
+	text-align : center;
+}
+#sajin:hover {
+	opacity : 0.5;
+}
+h2 {
+	color : #6699ff;
+}
+.mok1 {
+	color : fuchsia;
+}
+#mok2 {
+	color : green;
+}
+table {
+	border : 2px solid green;
+	border-collapse : collapse;
+}
+th {
+	background-color : lime;
+}
+tr {
+	border : 2px solid green;
+}
+</style>
+</head>
+<body>
+	<header>
+		<h1>HTML5 학습</h1>
+		<nav>
+			<a href="http://www.w3.org/" class="li" target="_blank">W3C</a> <a
+				href="http://www.w3schools.com/" class="li" target="_blank">W3SCHOOL</a> <a
+				href="http://www.jQuery.com/" class="li" target="_blank">jQuery</a>
+		</nav>
+	</header>
+	<section>
+		<article>
+			<h2><span class="mok1">나의 소개</span></h2>
+			<ul>
+				<li>이름 : 최성연</li>
+				<li>별명 : 해콩, 붕어 등등</li>
+				<li>관심기술 : RRRRRRRRRRRR</li>
+				<li>취미 : 농구, 게임 연구, 개인방송 시청</li>
+			</ul>
+		</article>
+		<article>
+			<h2><span id="mok2">재미있게 본 경기</span></h2>
+			<table border="1">
+				<tr>
+					<th>제목</th>
+					<th>장르</th>
+				</tr>
+				<tr>
+					<td> &nbsp;마이애미 vs 골든스테이트&nbsp; </td>
+					<td> &nbsp;NBA&nbsp; </td>
+				</tr>
+				<tr>
+					<td> &nbsp;SKT1 vs 삼성&nbsp; </td>
+					<td> &nbsp;LOL&nbsp; </td>
+				</tr>
+				<tr>
+					<td> &nbsp;LA레이커스 vs 보스턴&nbsp; </td>
+					<td> &nbsp;NBA&nbsp; </td>
+				</tr>
+			</table>
+			<br>
+			<a href="https://sports.news.naver.com/basketball/vod/index.nhn?category=nba&tab=&listType=keyword&date=&gameId=&teamCode=&playerId=&keyword=%EB%A7%88%EC%9D%B4%EC%95%A0%EB%AF%B8%20%EA%B3%A8%EB%93%A0&id=516333&page=1" class="li" target="_blank"> * 마이애미 vs 골든스테이트 경기 다시보기</a><br>
+			<a href="https://sports.news.naver.com/esports/vod/index.nhn?category=lol&tab=&listType=keyword&date=&gameId=&teamCode=&playerId=&keyword=%EC%82%BC%EC%84%B1%20SKT&id=249754&page=6" class="li" target="_blank"> * 삼성 vs SKT 경기 다시보기</a><br>
+			<a href="https://sports.news.naver.com/basketball/vod/index.nhn?category=nba&tab=&listType=keyword&date=&gameId=&teamCode=&playerId=&keyword=la%20%EB%B3%B4%EC%8A%A4%ED%84%B4&id=511131&page=2" class="li" target="_blank"> * 보스턴 vs LA레이커스 경기 다시보기</a><br>
+		</article>
+		<article>
+			<h2>자랑하고 싶은 <span class="mok1">우리동네</span>의 아름다운 곳</h2>
+			<p>
+				<strong>창원시 상남동 유흥가 :</strong> 전국 최대 유흥가 밀집지역 중 한곳으로 먹을곳도 많지만 썬팅된
+				스타렉스가 자주 출몰하며 어깨 넓으신 형님들과 종종 마주치기도 하며 한 건물에서 식사부터 5차까지 모든것을 해결 가능한
+				곳이 많다. 한 건물에 노래방이 많은것으로 기네스에도 등극되었다.
+			</p>
+			<figure>
+				<img src="/edu/htmlexam/상남동.jpg" width="50%" id="sajin">
+				<figcaption>
+					<strong>상남동의 무자비한 유흥가들</strong>
+				</figcaption>
+			</figure>
+		</article>
+	</section>
+	<aside>
+		<!-- <section id="player"> -->
+			<video src="/edu/htmlexam/sangnam.mp4" controls width="40%" height="200">
+			</video>
+		<!-- </section> -->
+	</aside>
+	<footer>
+		<p>이 문서는 최성연에 의해 HTML5와 CSS3 기술을 사용하여 2020년 1월 6일에
+			작성하였습니다.(version 1.0)</p>
+	</footer>
+
+
+</body>
+</html>

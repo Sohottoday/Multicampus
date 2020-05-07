@@ -1,0 +1,6 @@
+result <- scan("data/iotest1.txt")
+io1<-sort(result)
+io2<-sort(result,decreasing = TRUE)
+io3<-sum(result)
+io4<-mean(result)
+cat("오름차순 : ",io1,"\n내림차순 : ",io2,"\n합 : ",io3,"\n평균 : ",io4)

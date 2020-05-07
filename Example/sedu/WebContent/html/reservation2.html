@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	section {
+		width : 500px;
+		padding : 10px;
+		background-image: linear-gradient(45deg, white, Aqua, #0099ff, #99ff33, #99ff99);
+	}
+	h1 {
+		font-size : 2em;
+		color : red;
+		text-shadow : 5px 5px 10px #660033;
+		text-align : center;
+	}
+	div {
+		text-align : center;
+	}
+	.cen {
+		box-shadow : 5px 5px 10px white;
+		
+	}
+</style>
+</head>
+<body>
+<section>
+<h1>펜션 예약 서비스</h1>
+<hr>
+<form action="/sedu/jspexam/reservation.jsp" method="post">
+
+	예약자명 : <input type="text" required name="rname"> <br>
+	예약암호 : <input type="password" required name="rpass"><br>
+	룸 선택 : 
+	<input type="radio" name='rroom' value="둘리">둘리&nbsp;
+	<input type="radio" name='rroom' value="희동">희동&nbsp;
+	<input type="radio" name='rroom' value="도우너">도우너&nbsp;
+	<input type="radio" name='rroom' value="또치">또치&nbsp;
+	<br>
+	추가요청 사항 : 
+	<input type="checkbox" name="plus" value="바베큐">바베큐&nbsp; 
+	<input type="checkbox" name="plus" value="수영장">수영장&nbsp;
+	<input type="checkbox" name="plus" value="낚시">낚시&nbsp;
+	<input type="checkbox" name="plus" value="조식">조식<br>
+	
+	예약 날짜 : <input type="date" required name="rdate">
+	<hr>
+	<div>
+	<input class="cen" type="submit" value="보내기">
+	<input class="cen" type="reset" value="다시작성하기">
+	</div>
+
+</form>
+</section>
+</body>
+</html>

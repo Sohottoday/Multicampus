@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="d3.v3.min.js"></script>
+		<title>SVG로 그리기</title>
+	</head>
+	<body>
+		<h1>문자의 글꼴 지정</h1>
+		<svg>
+			<text x="25" y="40" font-size="24px" style="fill:black">SVG 텍스트 예제</text>
+			<text x="25" y="80" font-size="24px" font-family="바탕" style="fill:black">SVG 텍스트 예제</text>
+			<text x="25" y="120" font-size="24px" font-family="궁서" style="fill:black">SVG 텍스트 예제</text>
+		</svg>
+		<script>
+		var family = ['둘리','또치','도우너','마이콜','희동이'];
+		d3.select("svg").attr("height","300px");
+		var duldul = d3.select("svg").selectAll("text").data(family)
+		
+		duldul.enter().append("text").attr("x","25").attr("y",function(d,i){ if(i==3) {return "160"}else{return "200"}}).attr("font-size","24px").attr("font-family",function(d,i){ if(i==3) {return "돋움"}else{return "굴림"}});
+		duldul.text(function(d){return d});
+		
+		</script>
+	</body>
+</html>

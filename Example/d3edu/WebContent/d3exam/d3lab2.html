@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="d3.v3.min.js"></script>
+		<title>SVG로 그리기</title>
+	</head>
+	<body>
+		<h1>문자의 글꼴 지정</h1>
+		<svg >
+			<text x="25" y="40" font-size="24px" style="fill:black">SVG 텍스트 예제</text>
+			<text x="25" y="80" font-size="24px" font-family="바탕" style="fill:black">SVG 텍스트 예제</text>
+			<text x="25" y="120" font-size="24px" font-family="궁서" style="fill:black">SVG 텍스트 예제</text>
+		</svg>
+		<script>
+		var family = ['듀크','턱시'];
+		var duldul = d3.selectAll("text").data(family)
+		.text(function(d){return d}).exit().remove()
+		
+		
+		</script>
+	</body>
+</html>

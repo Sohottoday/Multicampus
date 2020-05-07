@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>구구단 해보쟈</title>
+</head>
+<body>
+<script>
+	while(true) {
+	var num = window.prompt("1부터 9사이의 숫자를 입력하시오.");
+		if(num >=1 && num <=9);
+		break;
+	}
+	document.writeln("<h1>"+num+"단입니다<h1><hr>");
+	if(num <1 || num >9) {
+		window.alert("다시 입력하시오");
+	} else {
+		for(var n=1 ; n<=9 ; n++) {
+			var result;
+			result = num * n;
+			document.writeln(num+" x "+n+" = "+result+"<br>");
+		}
+	}
+	
+</script>
+</body>
+</html>

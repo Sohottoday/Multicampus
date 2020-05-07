@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div {
+		text-align : center;
+	}
+	button {
+		text-align : center;
+		margin : 30px;
+		width : 100px;
+		height : 50px;
+	}
+
+</style>
+<script>
+	var space;
+	function smile() {
+	space = document.getElementById('drawsection');
+	drawsection=space.getContext('2d');
+	
+	drawsection.beginPath();
+	drawsection.arc(150,200,100,0,Math.PI*2,false);
+	drawsection.strokeStyle='blue';
+	drawsection.stroke();
+	drawsection.fillStyle='yellow';
+	drawsection.fill();
+	
+	drawsection.beginPath();
+	drawsection.arc(400,200,100,0,Math.PI*2,false);
+	drawsection.strokeStyle='blue';
+	drawsection.stroke();
+	drawsection.fillStyle='yellow';
+	drawsection.fill();
+	
+	drawsection.beginPath();
+	drawsection.arc(650,200,100,0,Math.PI*2,false);
+	drawsection.strokeStyle='blue';
+	drawsection.stroke();
+	drawsection.fillStyle='rgb(255, 204, 153)';
+	drawsection.fill();
+
+	
+	drawsection.beginPath();
+	drawsection.arc(150,230,50,0,Math.PI,false);
+	drawsection.strokeStyle='black';
+	drawsection.stroke();
+	
+	drawsection.beginPath();
+	drawsection.arc(120,180,25,0,Math.PI,true);
+	drawsection.strokeStyle='black';
+	drawsection.stroke();
+	
+	drawsection.beginPath();
+	drawsection.arc(180,180,25,0,Math.PI,true);
+	drawsection.strokeStyle='black';
+	drawsection.stroke();
+	
+	drawsection.beginPath();
+	drawsection.font='30pt 맑은 고딕';
+	drawsection.fillStyle='rgb(0,0,0)';
+	drawsection.fillText("ㅅ",130,230);
+	drawsection.fill();
+	
+	drawsection.beginPath();
+	drawsection.font='50pt 맑은 고딕';
+	drawsection.fillStyle='rgb(0,0,0)';
+	drawsection.fillText('> <',340,190);
+	drawsection.fill();
+	
+	drawsection.beginPath();
+	drawsection.font='50pt 맑은 고딕';
+	drawsection.fillStyle='rgb(255, 255, 0)';
+	drawsection.fillText('$  $',590,190);
+	drawsection.fill();
+	
+	drawsection.beginPath();
+	drawsection.font='50pt 맑은 고딕';
+	drawsection.fillStyle='rgb(255, 0, 0)';
+	drawsection.fillText('0',630,270);
+	drawsection.fill();
+	
+	drawsection.beginPath();
+	drawsection.font='40pt 맑은 고딕';
+	drawsection.fillStyle='rgb(0,0,0)';
+	drawsection.fillText(')  (',615,265);
+	drawsection.fill();
+	
+	drawsection.beginPath();
+	drawsection.moveTo(370,230);
+	drawsection.lineTo(430,230);
+	drawsection.stroke();
+	}
+	
+	
+	window.addEventListener('load', smile,false);
+	
+	function saveAll() {
+		alert(space.toDataURL()); 
+		localStorage.setItem('space',space.toDataURL());
+	}
+	function delAll() {
+		//space.style.display='none';
+		drawsection.clearRect(0,0,1000,600);
+	}
+	
+	function restoreAll() {
+		var smileLoad = new Image();
+		smileLoad.src=localStorage.getItem('space');
+		smileLoad.onload = function() {
+			drawsection.drawImage(smileLoad,0,0);
+		}
+	}
+	
+	
+	</script>
+</head>
+<body>
+<div>
+	<button onclick="saveAll();">저장하기</button>
+	<button onclick="delAll();">지우기</button>
+	<button onclick="restoreAll();">불러오기</button>
+</div>
+<div>
+<canvas id='drawsection' width='1000' height='600'></canvas>
+</div>
+</body>
+</html>

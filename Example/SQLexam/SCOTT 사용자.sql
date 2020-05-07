@@ -1,0 +1,10 @@
+select user from dual;
+select*from tab;
+select sysdate from dual;
+desc emp;
+select*from emp;
+desc dept;
+select*from dept;
+select sysdate from emp;
+select ename, sal from emp;
+select distinct JOB, DEPTNO FROM EMP;

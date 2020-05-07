@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script:400" rel="stylesheet">
+<style>
+	h1 {
+		font-family : Nanum Pen Script;
+		font-size : 3em;
+		text-align : center;
+		color : white;
+	}
+	#out {
+		font-family : Nanum Pen Script;
+		font-size : 1.5em;
+		color : white;
+	}
+	div {
+		text-align : center;
+		height : 800px;
+	}
+	body {
+		position : relative;
+		z-index : 1;
+	}
+	body:after {
+		background-image : url("http://70.12.115.178:8000/springedu/resources/images/back.jpg");
+		background-repeat : no-repeat;
+		brackground-size : auto;
+		top : 0;
+		left : 0;
+		position : absolute;
+		opacity : 0.5!important;
+		filter:alpha(opacity=50);
+		z-index:-1;
+		content:"";
+		width : 100%;
+		height : 100%;
+		
+	}
+	#tname, #tmember {
+	 display: inline-block;
+  	vertical-align: top;
+  	height: 48px;
+  	line-height: 46px;
+  	padding: 0 25px;
+  	font-family: inherit;
+  	font-size: 15px;
+  	color: #bbb;
+  	text-align: center;
+  	text-decoration: none;
+  	text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
+  	background-color: #303030;
+  	background-clip: padding-box;
+  	border: 1px solid;
+  	border-color: #202020 #1a1a1a #111;
+  	border-radius: 25px;
+  	background-image: -webkit-linear-gradient(top, #3d3d3d, #272727);
+  	background-image: -moz-linear-gradient(top, #3d3d3d, #272727);
+  	background-image: -o-linear-gradient(top, #3d3d3d, #272727);
+  	background-image: linear-gradient(to bottom, #3d3d3d, #272727);
+  	-webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.09), 0 1px 3px rgba(0, 0, 0, 0.3);
+  	box-shadow: inset 0 1px rgba(255, 255, 255, 0.09), 0 1px 3px rgba(0, 0, 0, 0.3);
+	}
+	.good:hover {
+  	background-color: #363636;
+  	background-image: -webkit-linear-gradient(top, #404040, #2a2a2a);
+  	background-image: -moz-linear-gradient(top, #404040, #2a2a2a);
+  	background-image: -o-linear-gradient(top, #404040, #2a2a2a);
+  	background-image: linear-gradient(to bottom, #404040, #2a2a2a);
+	}
+</style>
+</head>
+
+<body>
+<h1>우리팀 소개</h1>
+<hr>
+<div>
+<button id="tname" onclick="teamname();">우리 팀명</button>
+<button id="tmember" onclick="teammember();">우리 팀원</button>
+<br>
+<br>
+
+<output id="out"></output>
+</div>
+<script>
+	function teamname() {
+		var xmlreq = new XMLHttpRequest();
+		xmlreq.onload = function(event) {
+			if(xmlreq.status == 200) {
+				var str = xmlreq.responseText;
+				var obj = JSON.parse(str);
+				var out = document.getElementById("out");
+				out.innerHTML = "- 팀명 : "+obj.teamName;
+			}
+		};
+		xmlreq.open('GET', '/springedu/myteam/json', true);
+		xmlreq.send();
+	}
+	
+	function teammember() {
+		var xmlreq = new XMLHttpRequest();
+		xmlreq.onload = function(event) {
+			if(xmlreq.status == 200) {
+				var str = xmlreq.responseText;
+				var obj = JSON.parse(str);
+				var out = document.getElementById("out");
+				out.innerHTML = "";
+				for(var n=0 ; n<=2 ; n++){
+				out.innerHTML += " - 이름 : "+obj.teamMember[n].name +"<br> - 별명 : "+ obj.teamMember[n].nicName+"<br>--------------------<br>";
+				}
+			}
+		};
+		xmlreq.open('GET', '/springedu/myteam/json', true);
+		xmlreq.send();
+	}
+
+</script>
+</body>
+</html>

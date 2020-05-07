@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="user"  class="sampleanno01.User">
+	<property name="name" value="Dooly"/>
+	<property name="age"  value="10"/>
+	<property name="hobby" value="swimming"/>
+</bean>
+
+<bean id="myProcess0"  class="sampleanno01.UserShow" />
+<bean id="myProcess1"  class="sampleanno01.UserShow"  
+										autowire="byName"/>		<!-- 알아서 setter 메서드에 적용시켜라 -->
+<bean id="myProcess2"  class="sampleanno01.UserShow"  
+										autowire="byType"/>		<!-- 유저 type에 알맞는 타입이 있으면 알아서 setter에 적용시켜라 --> 
+<bean id="myProcess3"  class="sampleanno01.UserShow"  
+										autowire="constructor"/>	<!-- 생성자를 호출해서 setter에 넣어라 -->
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

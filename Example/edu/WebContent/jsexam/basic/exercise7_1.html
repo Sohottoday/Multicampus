@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+ function printH1(content) {
+	 document.write("<h1>"+content+"</h1>");
+ }
+ function printH4(content) {
+	 document.write("<h4>"+content+"</h4>");
+ }
+ 
+/* var p1 = Array();
+ var p2;
+ var apply = function(p1,p2) {
+	 if(typeof p2 == 'function' || typeof p1=='undefined' || typeof p2=='undefined') {
+		 console.log("아규먼트 오류");
+		 return false;
+	 } else {
+		 for(var i=0; i<p1.length ; i++){
+			 document.write(p1[i]);
+		 }
+		 return true;
+	 }
+ }*/
+ 
+ function apply(p1, p2) {
+	 var tf = false;
+	 if(Array.isArray(p1) && typeof p2 == 'function'){
+		 for(var i=0 ; i<p1.length; i++) {
+			 p2(p1[i]);
+		 }
+		 tf=true;
+	 }else {
+		 console.log("아규먼트 오류");
+		 tf=false;
+	 }
+	 return tf;
+ }
+ var intothe = new Array();
+ var ppuutt;
+ var gogo
+ while(true) {
+ 	ppuutt = window.prompt("데이터를 입력하시오");
+ 		if(typeof ppuutt == 'string' || typeof ppuutt == 'number'){
+ 			intothe.push(ppuutt);
+ 		//	console.log(typeof ppuutt);
+ 		}
+ 	gogo = window.confirm("계속 하시겠습니까?");
+ 	if (!gogo)
+		break;
+ }
+ var resu;
+ var ddyy = new Date().getDay();
+ 	switch(ddyy) {
+ 		case 0 : resu=apply("ㅋㅋ",printH1);
+ 				 break;
+ 		case 6 : resu=apply(intothe);
+ 				 break;
+ 		case 1 :
+ 		case 3 :
+ 		case 5 : resu=apply(intothe,printH1);
+ 				 break;
+ 		case 2 :
+ 		case 4 : resu=apply(intothe,printH4);
+ 				 break;
+ 	}
+ if(resu) {
+	 window.alert("성공")
+ } else {
+	 window.alert("실패")
+ }
+</script>
+
+</body>
+</html>

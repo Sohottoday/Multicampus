@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<button onclick="bbtt()">랜덤값을 통해 이동</button>
+<script>
+	function bbtt() {
+	var ran = Math.floor(Math.random()*3+1);
+
+	var llink = {
+		name : "",
+		link : ""
+	}
+	if(ran==1) {
+		llink.name="다음";
+		llink.link="http://www.daum.co.kr";
+	} else if (ran==2) {
+		llink.name="네이버";
+		llink.link="http://www.naver.co.kr";
+	} else {
+		llink.name="구글";
+		llink.link="http://www.google.com";
+	}
+	
+	if(window.confirm(llink.name+"으로 이동할래유?")){
+		window.open(llink.link);
+	} else {
+		window.open("/edu/first.html");
+	}
+	}
+</script>
+</body>
+</html>

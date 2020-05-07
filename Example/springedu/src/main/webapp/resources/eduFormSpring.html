@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	section {
+		background-image : radial-gradient(white, #66ff99, #009933);
+		width : 500px;
+		height : 300px;
+		border-radius : 20px;
+		margin-right : auto;
+		margin-left : auto;
+	}
+	h1 {
+		text-align : center;
+		padding : 20px;
+	}
+	form {
+		padding : 10px;
+		font-size : 1.5em;
+	}
+	.but {
+		width : 70px;
+		height : 40px;
+	}
+</style>
+</head>
+<body>
+
+<section>
+<h1>성적을 입력하시오</h1>
+<hr>
+<form method="post" action="/springedu/eduspring">
+	이름 : <input type="text" name="name"><br><br>
+	평균 점수 : <input type="number" name="avgnum">
+	<br><br>
+	<input type="submit" value="전송" class="but">
+	<input type="reset" value="재작성" class="but">
+	
+</form>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	h1 {
+		text-align : center;
+	}
+	button {
+		width : 100px;
+		height : 50px;
+		border-radius : 20px;
+		margin : 30px;
+	}
+	div {
+		text-align : center;
+	}
+	
+</style>
+</head>
+<body>
+	<h1>Welcome to NBA</h1>
+	<div id='btn'>
+	<button>이미지 보이기</button>
+	<button>이미지 숨기기</button><hr>
+	</div>
+	<div id='nba'>
+	<img src="../../cssexam/nba.jpg">
+	</div>
+<script>
+	
+	var nnba = document.getElementById('nba');
+	nnba.style.display='none';
+	var buton1 = document.querySelectorAll('button')[0];
+	var buton2 = document.querySelectorAll('button')[1];
+	
+	function view() {
+		nnba.style.display='block';
+	}
+	
+	function hide() {
+		nnba.style.display='none';
+	}
+	
+	buton1.addEventListener('click', view);
+	buton2.addEventListener('click', hide);
+
+</script>
+
+</body>
+</html>

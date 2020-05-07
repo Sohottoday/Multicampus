@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>날짜 관련</title>
+</head>
+<body>
+<script src="../util.js"></script>
+<script>
+	function DayInfo(p1, p2, p3, p4) {
+		this.name=p1;
+		this.year=parseInt(p2);
+		this.month=parseInt(p3);
+		this.day=parseInt(p4);
+	}
+	DayInfo.prototype.getTotalDays=function() {
+		var ddaayy=new Date()-new Date(this.year, this.month-1, this.day);
+		var brth = Math.ceil(ddaayy/(24*3600*1000));
+		/*var birthDay=new Date(this.year, this.month-1, this.date);
+		var nowTime=new Date();
+		var sec1=birthDay.getTime();    getTime() => 해당일을 밀리세컨드로 변환
+		var sec2=nowTime.getTime();
+		var brth=Math.floor((sec2-sec1)/(24*3600*1000));*/
+		return this.name+"님은 태어난지"+brth+"일 되었습니다.";
+	}
+	DayInfo.prototype.getKorDay=function() {
+		var d = new Date(this.year, this.month-1, this.day).getDay();
+		var dayary = ['일','월','화','수','목','금','토']; 
+		return this.name+"님은 "+dayary[d]+"요일에 태어났어요";
+		console.log(d);
+	}
+
+	var info1 = new DayInfo('코비', 1991, 11, 14);
+	var info2 = new DayInfo('르브론', 1993, 6, 23);
+	var info3 = new DayInfo('앤써니', 1994, 9, 4);
+	
+
+	writeColor(info1.getTotalDays(), 'h1','green');
+	writeColor(info2.getTotalDays(), 'h2','blue');
+	writeColor(info3.getTotalDays(), 'h3','purple');
+
+	writeColor(info1.getKorDay(), 'h1','green');
+	writeColor(info2.getKorDay(), 'h2','blue');
+	writeColor(info3.getKorDay(), 'h3','purple');
+	
+	
+	
+	
+	/*info2.getTotalDays();
+	info3.getTotalDays();
+	info1.getKorDay();
+	info2.getKorDay();
+	info3.getKorDay();*/
+	
+	
+
+</script>
+
+</body>
+</html>

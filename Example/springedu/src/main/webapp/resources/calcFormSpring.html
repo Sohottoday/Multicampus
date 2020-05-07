@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>연산할 두 개의 숫자를 입력하고 연산자를 선택하시오.</h1>
+<hr>
+<form method="get" action="http://localhost:8000/springedu/calc">
+	<input type="number" required name="firstnum">
+	<select name="cal">
+		<option>+</option>
+		<option>-</option>
+		<option>*</option>
+		<option>/</option>
+	</select>
+	<input type="number" required name="secondnum">
+	<input type="submit" value="계산하기">
+</form>
+</body>
+</html>
