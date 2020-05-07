@@ -21,7 +21,7 @@ public class Exercise3 {
 				return s2.compareTo(s1);
 			}
 		);
-		
+		  
 		
 		System.out.println("내림차순으로 정렬하려면 두번째 매개변수를 기준으로 비교하는 Comparator 객체 전달 : "+list);
 	}

@@ -16,7 +16,6 @@ public class Exercise1 {
 		/*
 		 * exec(new Calculation () { public int add(int a, int b) { return a + b; } });
 		 */
-		
 		exec((a,b) -> a+b
 				);	//a+b 뒤에 ;는 왜 붙이면 안되는가?
 	}

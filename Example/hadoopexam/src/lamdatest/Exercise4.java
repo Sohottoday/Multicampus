@@ -19,5 +19,5 @@ public class Exercise4 {
 		};
 		test.run();
 		test.print();
-	}
+	}	//변경할 내용 없음.
 }

@@ -1,6 +1,6 @@
 package lamdatest;
 
-@FunctionalInterface // 함수형 인터페이스 체크 어노테이션
+@FunctionalInterface // 함수형 인터페이스 체크 어노테이션  
 interface MyNumber {
 	int getMax(int num1, int num2);
 }

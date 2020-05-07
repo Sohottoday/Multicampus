@@ -29,10 +29,6 @@ public class Exercise5 {
 			return "OK";
 			
 		});
-
-		
-		
-		
 		
 //		Test1(new ActionExpression() {
 //			public void exec(Object... data) {
