@@ -1,0 +1,16 @@
+.box {
+    width : 200px;
+    height : 200px;
+    background-color : magenta;
+    border-color : black;
+    border-width : 2px;
+    border-style : solid;
+    /* border: black soild 2px */
+    margin-bottom: 5px;
+    margin-right : auto;
+    margin-left : auto;
+}
+span {
+    display : block; 
+    /* 원래 inline 형태지만 block형태로 바꾼다는 의미       */
+}
