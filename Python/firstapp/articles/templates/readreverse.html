@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>회문을 판별해 보쟈</h1>
+
+    {% if testword == reverseword %}
+        <p>{{testword}}는 회문이라 {{reverseword}} 입니다.</p>
+    {% else %}
+        <p>{{testword}}는 회문이 아닙니다.</>
+    {% endif %}
+</body>
+</html>
