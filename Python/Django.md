@@ -194,8 +194,9 @@ pip install django==2.1.15
   - if로 조건을 주어준 뒤 python if 처럼 사용하면 된다.
   - else if문도 가능하다.
 - filter
-  - 변수나 객체 옆 | 을 넣어 사용한다.
-
+  
+- 변수나 객체 옆 | 을 넣어 사용한다.
+  
 - 단순히 내용을 채우고 싶다면 lorem 작성 후 tab
   - 원하는 길이만큼 사용 가능하다
     - lorem5 한 뒤 tab
@@ -280,7 +281,67 @@ pip install django==2.1.15
 </html>
 ```
 
+- django에서 검색창과 보여주는 view는 2개가 필요하다.
 
+  - form태그의 input의 내용들은 request 객체에 모두 담긴다.
+  - 모를때에는 검색할 때 뒤에 mdn을 붙이면 자세한 정보가 나온다 ex) input type mdn
+  - form 에서 중요한 것
+    - 데이터를 어디로 보낼 것인지 => action
+    - 어떤 방식으로 보낼지 = method
+    - 어떤 데이터를 보낼지 => input, type
+    - 데이터의 이름은 어떻게 붙일지 => name
+    - 제출 => submit
+  -  request 객체 안에는 딕셔너리 타입으로 저장된다.
+  - 가져오는 값의 이름은 input 태그의 name에 지정한다.
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+  </head>
+  <body>
+      <h1>Throw</h1>
+      <form action="/catch/">
+          <input type="text" name="message">
+          <input type="submit">
+      </form>
+  </body>
+  </html>
+  ```
+
+  ```python
+  def throw(request):
+      return render(request, 'throw.html')
+  
+  
+  def catch(request):
+      #pprint(request.GET)
+      #print(request.GET.get('message'))
+      context = {
+          'message' : request.GET.get('message')
+      }
+      return render(request, 'catch.html', context)
+  ```
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+  </head>
+  <body>
+      <h1>여기는 catch 입니다.</h1>
+      <h2>검색 결과 : {{ message }}  </h2>
+  </body>
+  </html>
+  ```
+
+  
 
 
 
@@ -304,3 +365,10 @@ http://picsum.photos/200/300.jpg
 - 익스텐션 설치 후 f1 -> json -> open settings 에 들어가 json 익스텐션 내 내용들을 복붙해준다.
 
 - 이 설정을 하고 나면 익스텐션 설치한 후에도 !+tab이 가능하다.
+
+#### GET
+
+- HTTP method 중 GET 요청은 서버로부터 정보를 조회하는데 사용된다.
+- 서버의 데이터나 상태를 변경시키지 않기 때문에 단순 조회(html)할 때 사용.
+- 데이터를 전송할 때 http body가 아니라 쿼리스트링을 통해 전송.(쿼리스트링 : URL 뒤쪽에 붙는 내용들)
+
