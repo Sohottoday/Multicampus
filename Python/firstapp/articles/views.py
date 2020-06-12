@@ -1,4 +1,5 @@
 import random
+from pprint import pprint
 from datetime import datetime
 from django.shortcuts import render
 
@@ -61,6 +62,7 @@ def dtl_practice(request):
     }
     return render(request, 'dtl_practice.html', context)
 
+
 def readreverse(request, testword):
     reverseword = testword[::-1]
     context = {
@@ -68,3 +70,17 @@ def readreverse(request, testword):
         'reverseword' : reverseword,
     }
     return render(request, 'readreverse.html', context)
+
+
+def throw(request):
+    return render(request, 'throw.html')
+
+
+def catch(request):
+    #pprint(request.GET)
+    #print(request.GET.get('message'))
+    context = {
+        'message' : request.GET.get('message'),
+        'color' : request.GET.get('color'),
+    }
+    return render(request, 'catch.html', context)

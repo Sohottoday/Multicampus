@@ -27,4 +27,6 @@ urlpatterns = [
     path('add/<int:num1>/<int:num2>', views.add),
     path('dtl-practice/', views.dtl_practice),
     path('readreverse/<testword>', views.readreverse),
+    path('throw/', views.throw),
+    path('catch/', views.catch),
 ]
