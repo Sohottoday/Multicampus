@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/stylesheets/style.css' %}">
+{% endblock  %}
+{% block content %}
+    <img src="{% static 'pages/images/blackhole.jpg' %}" alt="">
+    <h1>두번째 앱의 index</h1>
+    <img src="{% static 'firstapp/images/notebook.jpg' %}" alt="">
+{% endblock  %}

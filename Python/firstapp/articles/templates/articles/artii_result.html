@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}ARTII RESULT{% endblock  %}
+{% block content %}
+
+    <h1>결과!! </h1>
+    <pre>{{result}}</pre>
+    <a href="{% url 'articles:artii' %}">다시 돌리기</a>
+    <a href="{% url 'articles:index' %}">index로 가기</a>
+{% endblock  %}

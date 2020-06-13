@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}YOURNAME{% endblock  %}
+{% block content %}
+
+    <h1>돌려돌려 번호</h1>
+    <form action="{% url 'articles:yournumber' %}", method="GET">
+        <input type="text" name="yourname">
+        <input type="submit" value="나만의 번호 돌리기">
+    </form>
+{% endblock  %}

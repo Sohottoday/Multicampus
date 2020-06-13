@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}ARTII TITLE{% endblock  %}
+
+{% block content %}
+
+    <h1>나만의 ASCII ARTII</h1>
+    <form action="{% url 'articles:artii_result' %}" method="GET">
+        단어를 입력하시오
+        
+        <input type="text" name='word'><br>
+        폰트를 선택하시오 : 
+        <select name="selectfont" id="selectfont">
+            {% for font in fonts %}
+            <option value="{{font}}">{{font}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit", value="만들기">
+       
+    </form>
+{% endblock  %}

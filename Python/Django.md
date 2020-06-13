@@ -341,7 +341,235 @@ pip install django==2.1.15
   </html>
   ```
 
-  
+
+
+
+- 어플리케이션이 2개 이상일 경우 urls.py가 너무 많아지는것을 대비해서 django는 urls.py를 각각의 어플리케이션에 할당해준다.
+- 프로젝트 전체의 urls.py 에는 include 까지 import 해준 뒤 urlpatterns 에서도 등록하고자 하는 어플리케이션 주소를 include해준다.
+- 프로젝트 전체 urls.py
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+from articles import views
+from pages import views 
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('articles/', include('articles.urls')),
+    path('pages/', include('pages.urls')),
+]
+```
+
+- 각각의 어플리케이션에서 urls.py를 만들어 준다.
+- 자기 자신의 views를 가져오더라도 from . import views를 통해 명시해준다.
+- 어플리케이션 내 urls.py
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('index/', views.index),
+    path('dinner/', views.dinner),
+    path('random/', views.ranimg),
+    path('hello/<str:name>/', views.hello),
+    path('myname/<myname>/<int:age>/', views.myname),
+    path('add/<int:num1>/<int:num2>', views.add),
+    path('dtl-practice/', views.dtl_practice),
+    path('readreverse/<testword>', views.readreverse),
+    path('throw/', views.throw),
+    path('catch/', views.catch),
+    path('yourname/', views.yourname),
+    path('yournumber/', views.yournumber),
+    path('artii/', views.artii, name='artii'),
+    path('artii-result', views.artii_result, name='artii_result'),
+]
+```
+
+- path를 지정할 때 name을 지정해주면 django에서 url 형식을 통해 url을 불러오는 것이 가능하다.
+- 각 어플리케이션에 app_name = '이름'을 지정해 주면 각기 다른 어플리케이션에 같은 path라도 이름이 겹치지 않는다.
+
+```python
+from django.urls import path
+
+app_name = 'pages'
+urlpatterns = [
+    path('index/', views.index, name='index'),
+]
+```
+
+```html
+   <a href="{% url 'article:index' %}">index로 가기</a>
+```
+
+- Variable Routing인 경우에는 콤마 없이 나열만 해주면 된다.
+
+```html
+   <a href="{% url 'article:add' int1 int2 %}">index로 가기</a>
+```
+
+
+
+- templates를 만들 때 첫번째 어플리케이션과 이름이 겹칠 경우 첫번째 어플리케이션의 html만 불러오게 되므로 강제적으로 경로를 설정해주는데, 이 과정은 templates 폴더를 만든 후 그 폴더 안에 폴더 하나를 더 생성해 준다. 보통 그 폴더 이름은 어플리케이션 이름과 동일하게 설정한다.
+- 위 방법을 통해 설정하면 views.py에서 html경로를 지정할 때에도 폴더를 포함하여 설정해줘야 한다.
+
+```python
+from django.shortcuts import render
+
+# Create your views here.
+def index(request):
+    return render(request, 'pages/index.html')
+
+```
+
+#### django template inheritance(쟝고 템플릿 상속)
+
+- 프로젝트 자체의 메인 html페이지를 만들어 각각의 어플리케이션의 모든 배경에 적용시키기 위함
+- firstapp 즉 기본 폴더 안에 templates 폴더를 생성후 base가 되는 html을 만들어 준다
+
+- block + tab 을 통해 block 영역을 만들어 이름을 지정해 준다.
+- 타이틀도 따로 지정하지 않으면 부모타이틀을 따라간다.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BASE TITLE{% endblock %}</title>
+       <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        {% endblock  %}
+    
+    </div>
+ 
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>
+```
+
+- 자식 html의 가장 위에 extends + tab을 통해 extends영역을 설정하고 그 아래 block을 덮어준다.
+
+```html
+{% extends 'base.html' %}
+
+{% block title %}ARTII TITLE{% endblock  %}
+
+{% block content %}
+
+    <h1>나만의 ASCII ARTII</h1>
+    <form action="{% url 'articles:artii_result' %}" method="GET">
+        단어를 입력하시오
+        
+        <input type="text" name='word'><br>
+        폰트를 선택하시오 : 
+        <select name="selectfont" id="selectfont">
+            {% for font in fonts %}
+            <option value="{{font}}">{{font}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit", value="만들기">
+       
+    </form>
+{% endblock  %}
+```
+
+- 위에서 보면 알 수 있듯이 기본적인 html 설정 없이도 정상적으로 html페이지가 작동한다.
+
+- django는 기본적으로 templates를 app_name/templates에서 찾으므로 프로젝트 자체에 만든 templates를 찾지 못하므로 프로젝트의 settings.py로 들어가 'DIRS'에 os.path.join(BASE_DIR, 경로)를 지정해 준다.
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'firstapp', 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+#### static
+
+- 웹 사이트의 구성 요소 중에서 image, css, js 파일과 같이 해당 내용이 고정되어, 응답을 할 때 별도의 처리 없이 파일 내용을 그대로 보여주는 파일(정적 파일)
+- 사용자의 요청에 따라 내용이 바뀌는 것이 아니라 요청한 것을 그대로 응답해주면 되는 것.
+- django는 기본적으로 static도 app_name/static에서 찾는다.
+- 어플리케이션에서 static이라는 폴더를 만들어 준 뒤 그 안에 어플리케이션과 같은 이름의 폴더 하나를 더 생성해 준다.
+- 해당 폴더 안에 image, css, js 등이 들어간다.
+- static 내의 이미지를 사용하려면 load + tab 을 통해 static을 로드한 뒤 img src에도 그냥 일반적인 경로가 아닌 static + tab 을 통해 static 형태를 불러와 경로를 지정해 준다.
+
+```html
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <img src="{% static 'pages/blackhole.jpg' %}" alt="">
+    <h1>두번째 앱의 index</h1>
+{% endblock  %}
+
+```
+
+- 보통 image, css, js는 분리해서 넣어두는데 static 폴더 안의 어플리케이션 이름 폴더 안에 각각의 형태에 맞게 폴더를 만들어 준다. image는 보통 images, css는 stylesheets로 만들어 준다.
+
+```html
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/stylesheets/style.css' %}">
+{% endblock  %}
+{% block content %}
+    <img src="{% static 'pages/images/blackhole.jpg' %}" alt="">
+    <h1>두번째 앱의 index</h1>
+{% endblock  %}
+
+```
+
+- static 파일이 프로젝트 자체에 존재하려면 settings.py에 설정이 필요하다.
+- 
+
+```python
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'firstapp', 'static'), 
+]
+```
+
+- 프로젝트 자체에도 어플리케이션과 같이 static 폴더와 하위 폴더를 만들어 준 뒤 파일을 넣어준다.
+
+```html
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/stylesheets/style.css' %}">
+{% endblock  %}
+{% block content %}
+    <img src="{% static 'pages/images/blackhole.jpg' %}" alt="">
+    <h1>두번째 앱의 index</h1>
+    <img src="{% static 'firstapp/images/notebook.jpg' %}" alt="">
+{% endblock  %}
+```
+
+
+
+
 
 
 

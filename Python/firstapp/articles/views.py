@@ -1,11 +1,12 @@
 import random
+import requests
 from pprint import pprint
 from datetime import datetime
 from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'articles/index.html')
 
 
 def dinner(request):
@@ -14,7 +15,7 @@ def dinner(request):
     context = {
         'pick': pick,
     }
-    return render(request, 'dinner.html', context)
+    return render(request, 'articles/dinner.html', context)
 
 
 def ranimg(request):
@@ -22,14 +23,14 @@ def ranimg(request):
     context = {
         'url' : URL,
     }
-    return render(request, 'ranimg.html', context)
+    return render(request, 'articles/ranimg.html', context)
 
 
 def hello(request, name):
     context = {
         'name' : name,
     }
-    return render(request, 'hello.html', context)
+    return render(request, 'articles/hello.html', context)
 
 
 def myname(request, myname, age):
@@ -37,7 +38,7 @@ def myname(request, myname, age):
         'myname' : myname,
         'age' : age
     }
-    return render(request, 'myname.html', context)
+    return render(request, 'articles/myname.html', context)
 
 def add(request, num1, num2):
     result = num1 + num2
@@ -46,7 +47,7 @@ def add(request, num1, num2):
         'num2' : num2,
         'result' : result
     }
-    return render(request, 'add.html', context)
+    return render(request, 'articles/add.html', context)
 
 
 def dtl_practice(request):
@@ -60,7 +61,7 @@ def dtl_practice(request):
         'messages' : messages,
         'datetime_now' : datetime_now,
     }
-    return render(request, 'dtl_practice.html', context)
+    return render(request, 'articles/dtl_practice.html', context)
 
 
 def readreverse(request, testword):
@@ -69,11 +70,11 @@ def readreverse(request, testword):
         'testword' : testword,
         'reverseword' : reverseword,
     }
-    return render(request, 'readreverse.html', context)
+    return render(request, 'articles/readreverse.html', context)
 
 
 def throw(request):
-    return render(request, 'throw.html')
+    return render(request, 'articles/throw.html')
 
 
 def catch(request):
@@ -83,4 +84,43 @@ def catch(request):
         'message' : request.GET.get('message'),
         'color' : request.GET.get('color'),
     }
-    return render(request, 'catch.html', context)
+    return render(request, 'articles/catch.html', context)
+
+
+def yourname(request):
+    return render(request, 'articles/yourname.html')
+
+
+def yournumber(request):
+    rannum = sorted(random.sample(range(1,46),6))
+    context = {
+        'yourname' : request.GET.get('yourname'),
+        'yournumber' : rannum
+    }
+    return render(request, 'articles/yournumber.html', context)
+
+
+def artii(request):
+    response = requests.get('http://artii.herokuapp.com/fonts_list').text
+    fonts_list = response.split('\n')
+    #font = random.choice(fonts_list)
+    context = {
+        'fonts' : fonts_list
+    }
+    return render(request, 'articles/artii.html',context)
+
+
+def artii_result(request):
+    word = request.GET.get('word')
+    font = request.GET.get('selectfont')
+    
+    ARTII_URL = f'http://artii.herokuapp.com/make?text={word}&font={font}'
+    #'http://artii.herokuapp.com/make?text={0}&font={1}'.format(word, font)
+    
+    # Artii api 주소로 우리가 만든 데이터와 함께 요청을 보낸다.
+    result = requests.get(ARTII_URL).text
+
+    context = {
+        'result' : result,
+    }
+    return render(request, 'articles/artii_result.html', context)
