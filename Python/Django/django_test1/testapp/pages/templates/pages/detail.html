@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>게 시 글</h1>
+<p>제 목 : {{pages.title}}</p>
+<p>내 용 : {{pages.content}}</p>
+<p>시 간 : {{pages.updated_at}}</p>
+
+<form action="{% url 'pages:delete' pages.pk %}" method='POST'>
+{% csrf_token %}
+<button>삭 제</button>
+</form>
+<a href="{% url 'pages:edit' pages.pk %}">수 정</a>
+<a href="{% url 'pages:index' %}">목 록</a>
+
+{% endblock  %}

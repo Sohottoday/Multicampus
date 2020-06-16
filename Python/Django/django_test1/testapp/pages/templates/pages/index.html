@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>게 시 판</h1>
+<a href="{% url 'pages:new' %}">게시글 작성</a>
+<table>
+{% for page in pages %}
+<tr>
+<td>{{page.pk}}</td>
+<td><a href="{% url 'pages:detail' page.pk %}">{{page.title}}</a></td>
+<td>{{page.updated_at}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock  %}
+

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center">Articles</h1>
+    <a href="{% url 'articles:new' %}">NEW</a>
+    <hr>
+    {% comment %} {% for article in articles %}
+        <p>글 번호 : {{article.pk}}</p>
+        <p>글 제목 : {{article.title}}</p>
+        <p>글 내용 : {{article.content}}</p>
+        <p>글 시간 : {{article.created_at}}</p>
+        <hr>
+    
+    {% endfor %} {% endcomment %}
+    <table>
+    {% for article in articles %}
+    <tr>
+    <td>{{article.pk}}</td>
+    <td><a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a></td>
+    {% comment %} <td>{{article.content}}</td> {% endcomment %}
+    <td>{{article.created_at}}</td>
+    </tr>
+    {% endfor %}
+    
+    </table>
+
+{% endblock  %}

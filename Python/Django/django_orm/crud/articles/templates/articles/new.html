@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>NEW</h1>
+<form action="{% url 'articles:create' %}" method='POST'>
+    {% csrf_token %}
+    <input type="text" name="title"><br>
+    <textarea name="content" cols="30" rows="10"></textarea><br>
+    <button class="btn btn-primary">작 성</button>
+
+</form>
+{% endblock  %}
