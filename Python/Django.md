@@ -577,6 +577,10 @@ STATICFILES_DIRS = [
 
 - 인스턴스 자기 자신
 
+### ORM
+
+- OOP 프로그래밍에서 
+
 
 
 ## Models
@@ -735,6 +739,15 @@ article.delete()
 
 
 
+##### object
+
+- models.py에 작성한 클래스를 불러와서 사용할 때 DB와의 인터페이스 역할을 하는 manager
+- python class ------- objects -----------DB(SQL)
+
+
+
+
+
 #### 계정 또한 데이터이기 때문에 반드시 migrate 작업 후에 관리자 계정을 만들어야 한다.
 
 ### admin 작성 순서
@@ -816,6 +829,267 @@ def index(request):
 
 
 
+#### READ
+
+``` PYTHON
+from django.shortcuts import render
+from .models import Article
+
+# Create your views here.
+def index(request):
+    articles = Article.objects.all()
+
+    context = {
+        'articles' : articles,
+    }
+    return render(request, 'articles/index.html', context)
+```
+
+
+
+#### CREATE
+
+- 필요한 view 함수는 2개
+  - new / create
+
+#### POST
+
+- 사용자는 DJANGO에게 'html파일 줘!(GET)'가 아니라 '~한 레코드(글)을 생성해줘!(POST)'이기 때문에 http method POST를 사용해야 한다.
+- 데이터는 URL에 직접 노출되서는 안된다.(우리가 URL에 접근하는 방식은 모두 GET 요청) / query의 형태를 통해 DB 구조(schema)를 유추할 수 있고 이는 보안적인 측면에서 매우 취야약하다.
+- DB를 조작하는 친구는 GET이 아닌 POST
+  - 중요한 요청이기 때문에 최소한의 신원 확인이 필요
+  - csrf_token을 생성해 post방식으로 오류 없이 넘겨준다.
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>NEW</h1>
+<form action="{% url 'articles:create' %}" method='POST'>
+    {% csrf_token %}
+    <input type="text" name="title"><br>
+    <textarea name="content" cols="30" rows="10"></textarea><br>
+    <button class="btn btn-primary">작 성</button>
+
+</form>
+{% endblock  %}
+```
+
+
+
+- 예를들어 게시글 작성 후에는 작성 완료 후 다시 목록 페이지를 보여주는 것이므로 render가 아닌 redirect를 사용한다. redirect를 사용할 때 url구조는 :를 활용한다
+
+``` python
+from django.shortcuts import render, redirect
+from .models import Article
+
+# Create your views here.
+def index(request):
+    articles = Article.objects.all()
+
+    context = {
+        'articles' : articles,
+    }
+    return render(request, 'articles/index.html', context)
+
+
+def new(request):
+    return render(request, 'articles/new.html')
+
+
+def create(request):
+    # 1. new에서 보낸 데이터 받기
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+
+    # 2. db에 저장
+    # article = Article()
+    # article.title = title
+    # article.content = content
+    # article.save()
+
+    article = Article(title = title, content = content)
+    article.save()
+
+    #Article.objects.create(title = title, content = content)
+    return redirect('articles:index')
+```
+
+
+
+#### READ(DETAIL) 상세페이지
+
+- 일반적인 게시판에서 보듯이 클릭했을 경우 상세내용을 보는 것
+- 프라이머리키로 링크를 걸어주면 된다.
+
+``` python
+def create(request):
+    # 1. new에서 보낸 데이터 받기
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+    # 2. db에 저장
+    # article = Article()
+    # article.title = title
+    # article.content = content
+    # article.save()
+
+    article = Article(title = title, content = content)
+    article.save()
+
+    #Article.objects.create(title = title, content = content)
+    return redirect('articles:detail', article.pk)
+
+
+def detail(request, pk):
+    article = Article.objects.get(pk=pk)
+    context = {
+        'article' : article,
+    }
+    return render(request, 'articles/detail.html', context)
+```
+
+- 디테일 페이지 내부
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>DETAIL</h1>
+    {{ article.pk }} 번 글
+    <hr>
+    <p>제목 : {{article.title}}</p>
+    <p>내용 : {{article.content}}</p>
+    <p>작성 시각 : {{article.created_at}}</p>
+    <p>수정 시각 : {{article.updated_at}}</p>
+    <hr>
+    <a href="{% url 'articles:index' %}">back</a>
+
+{% endblock  %}
+```
+
+- 인덱스 페이지
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center">Articles</h1>
+    <a href="{% url 'articles:new' %}">NEW</a>
+    <hr>
+    {% comment %} {% for article in articles %}
+        <p>글 번호 : {{article.pk}}</p>
+        <p>글 제목 : {{article.title}}</p>
+        <p>글 내용 : {{article.content}}</p>
+        <p>글 시간 : {{article.created_at}}</p>
+        <hr>
+    
+    {% endfor %} {% endcomment %}
+    <table>
+    {% for article in articles %}
+    <tr>
+    <td>{{article.pk}}</td>
+    <td><a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a></td>
+    {% comment %} <td>{{article.content}}</td> {% endcomment %}
+    <td>{{article.created_at}}</td>
+    </tr>
+    {% endfor %}
+    
+    </table>
+
+{% endblock  %}
+```
+
+
+
+#### Delete
+
+- 삭제 역시 주소창에 남으면 DB변동이 마음대로 될 가능성이 있으므로 get방식이 아닌 post방식으로 진행해야 한다.
+- 삭제하면 '삭제되었습니다'같은 페이지는 필요 없이 목록 페이지로 돌아가면 된다
+- 또한 GET 방식일때 작동하지 않고 POST 방식일때만 작동하도록 하려면 if문을 써준다.
+
+``` python
+def delete(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.method == 'POST':
+        article.delete()
+        return redirect('articles:index')
+    else:
+        return redirect('articles:detail', article.pk)
+```
+
+- html에서도 csrf_token을 빼먹으면 오류가 뜬다.
+
+```html
+<form action="{% url 'articles:delete' article.pk %}" method="post">
+        {% csrf_token %}
+        <button>삭 제</button>
+</form>
+```
+
+
+
+#### Update
+
+- 수정을 작성하는 곳, 수정을 전달하는 페이지, 2개가 필요하다
+- update 역시 프라이머리키 기준으로 진행하는것이 좋다.
+- edit/update
+
+``` python
+    path('<int:pk>/edit/', views.edit, name='edit'),
+    path('<int:pk>/update/', views.update, name='update'),
+```
+
+- views.py
+
+``` python
+def edit(request, pk):
+    article = Article.objects.get(pk=pk)
+    context = {
+        'article' : article,
+    }
+    return render(request, 'articles/edit.html', context)
+
+
+def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    # 1. update는 edit에서 보내는 데이터 받기
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+    article.title = title
+    article.content = content
+    article.save()
+
+    return redirect('articles:detail', article.pk)
+```
+
+- edit.html
+  - 기존 값들을 받아와 출력한 뒤 update로 넘긴다.
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>EDIT</h1>
+<form action="{% url 'articles:update' article.pk %}" method='POST'>
+    {% csrf_token %}
+    <input type="text" name="title" value="{{article.title}}"><br>
+    <textarea name="content" cols="30" rows="10"> {{article.content}} </textarea><br>
+    <button class="btn btn-primary">수 정</button>
+
+</form>
+{% endblock  %}
+```
+
+- 세부 내용에서의 수정 버튼
+
+``` html
+<a href="{% url 'articles:edit' article.pk %}">수 정</a>
+```
+
+
+
+
+
 
 
 
@@ -829,9 +1103,14 @@ http://picsum.photos/200/300.jpg
 #### django import style guide
 
 1. standard library
+
 2. 3rd party library
+
 3. django
+
 4. local django
+
+   
 
 #### django 익스텐션 설치
 
@@ -844,4 +1123,6 @@ http://picsum.photos/200/300.jpg
 - HTTP method 중 GET 요청은 서버로부터 정보를 조회하는데 사용된다.
 - 서버의 데이터나 상태를 변경시키지 않기 때문에 단순 조회(html)할 때 사용.
 - 데이터를 전송할 때 http body가 아니라 쿼리스트링을 통해 전송.(쿼리스트링 : URL 뒤쪽에 붙는 내용들)
+
+
 
