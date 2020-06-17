@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<h2>책 등 록</h2>
+<form action="" method="POST">
+{% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      수 정
+    </button>
+  {% endbuttons %}
+
+{% comment %} <a href="{% url 'books/detail' books.pk %}">되돌아가기</a> {% endcomment %}
+</form>
+{% endblock  %}

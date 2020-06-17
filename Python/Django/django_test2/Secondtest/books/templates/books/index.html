@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">읽은 책 목록</h1>
+<a href="{% url 'books:create' %}">새글 작성</a>
+<hr>
+<table>
+{% for book in books %}
+<tr>
+<td>책 제목 : <a href="{% url 'books:detail' book.pk %}">{{book.name}}</a></td>
+<td>책 저자 : {{book.author}}</td>
+<td>페이지 : {{book.page}}</td>
+<td>업데이트 : {{book.update_at}}</td>
+</tr>
+{% endfor %}
+</table>
+
+
+{% endblock  %}

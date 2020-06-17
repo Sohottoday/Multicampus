@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class='text-center'></h1>
+<hr>
+
+<p>제 목 : {{ book.name }}</p>
+<p>저 자 : {{ book.author }}</p>
+<p>페이지 : {{ book.page }}</p>
+<p>업데이트 : {{ book.update_at }}</p>
+
+<form action="{% url 'books:delete' book.pk %}" method='POST'>
+{% csrf_token %}
+<button>삭 제</button>
+</form>
+<a href="{% url 'books:index' %}">목록으로</a>
+<a href="{% url 'books:update' book.pk %}">수 정</a>
+
+{% endblock  %}

@@ -1086,6 +1086,316 @@ def update(request, pk):
 <a href="{% url 'articles:edit' article.pk %}">수 정</a>
 ```
 
+### DJANGO form 클래스
+
+- form 내 field들, field배치, widget, label 유효한 값 등을 정의하고 비유효한 field에 관련된 에러메세지를 결정한다.
+- 우리가 직접 form 태그를 작성하는 것보다 유효한 데이터에 요구되는 여러 동작을 '올바르게'하기 위해서 제공하는 기능
+
+#### ModelForm
+
+- django가 해당하는 모델에서 양식에 필요한 모든 정보를 이미 정의한다.
+- Meta정보를 통해 어떤 model을 정의하는지 이미 알고 있기 때문에 검증이 끝나면 바로 save()가 가능하다.
+
+
+
+- 작업중인 어플리케이션에 forms.py 를 생성한다.
+- DB에 있는 변수를 끌어다 쓰기 때문에 DB 클래스를 import한다
+- foms.py에서 html작업도 가능하다.
+
+``` python
+from django import forms
+from .models import Article
+
+# class ArticleForm(forms.Form):
+#     title = forms.CharField(max_length=20)
+#     content = forms.CharField(widget=forms.Textarea)
+
+class ArticleForm(forms.ModelForm):
+    # 출력되는 값들을 지정해주기 위한 위젯
+    title = forms.CharField(
+        label='제목',       # 출력되는 값 지정
+        widget=forms.TextInput(     # html에서 class명 등을 지정할 수 없기 때문에 이곳에서 지정한다.
+            attrs={
+                'class' : 'my-title',
+                'placeholder' : 'Enter the title',
+            }
+        )
+    )
+    content = forms.CharField(
+        label='내용',
+        widget=forms.Textarea(
+            attrs={
+                'class' : 'my-content',
+                'placeholder' : 'Enter the content',
+                'cols' : 50,
+                'rows' : 5,
+            }
+        )
+    )
+    #   Meta : ArticleForm 클래스에 대한 정보를 작성하는 곳
+    class Meta:         # Meta는 정보에 대한 정보
+        model = Article
+        #fields = ['title', 'content', ]
+        fields = '__all__'      # 이렇게 지정하면 모든 input을 출려개준다.
+        # 단 이렇게 했을 경우 원치 않는 부분까지 출력될 수도 있다.
+        # create와 update시간이 나오지 않는것은 input이 아니기 때문
+        # exclude = ['title']
+        # exclude를 통해 빼고싶은 부분만 뺄 수 있다.
+        
+```
+
+
+
+- views.py에서는 기존의 방식과 다르게 하나의 함수 정의로 CREATE나 UPDATE 작업이 가능하다.
+- POST방식에서는 유효성 검사가 필요하다.
+
+```python
+from django.shortcuts import render, redirect
+from .models import Article
+from .forms import ArticleForm
+
+# Create your views here.
+def index(request):
+    articles = Article.objects.all()
+    context = {
+        'articles': articles,
+    }
+    return render(request, 'articles/index.html', context)
+
+
+def create(request):
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        # 유효성 검사를 통해 안전한 데이터면 저장하라
+        if form.is_valid():
+            article = form.save()     
+            return redirect('articles:detail', article.pk)
+    else:       # 넘어오는 값이 GET 뿐만 아니라 다른  method 전주
+        form = ArticleForm()
+    # form의 2가지 모습
+    # 1. is_vaild()에서 통과하지 못한 form
+    # 2. else 구문의 form
+    # context 들여쓰기가 왜 이곳인지는 이론적으로 이해해야 한다
+    ## 내부 if분이 아닌 외부 if문의 else의 값에 대한 것이다.
+    context = {
+        'form' : form
+    }
+    return render(request, 'articles/create.html' , context)
+    
+
+
+def detail(request, pk):
+    article = Article.objects.get(pk=pk)
+    context = {
+        'article': article,
+    }
+    return render(request, 'articles/detail.html', context)
+
+
+def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:detail', article.pk)
+    else:
+        form = ArticleForm(instance=article)
+    context = {
+        'form' : form,
+    }
+    return render(request, 'articles/update.html', context)
+
+
+def delete(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.method == 'POST':
+        article.delete()
+        return redirect('articles:index')
+    return redirect('articles:detail', article.pk)
+
+```
+
+- 자기 자신에 대한 action은 입력할 필요가 없다.
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>NEW</h1>
+<form action="{% url 'articles:create' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}   
+  {% comment %} p태그로 감싸겠다는 의미 {% endcomment %}
+  {% comment %} form .as_p / .as_ul / .as_ul {% endcomment %}
+  <button class="btn btn-primary">작성</button>
+</form>
+{% endblock %}
+```
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>UPDATE</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}   
+  {% comment %} p태그로 감싸겠다는 의미 {% endcomment %}
+  {% comment %} form .as_p / .as_ul / .as_ul {% endcomment %}
+  <button class="btn btn-primary">수정</button>
+</form>
+{% endblock %}
+```
+
+
+
+- 데코레이터 퐐용으로 기능성 향상 및 코드 간단하게 만들어보기
+  - require을 import한 뒤 함수 위에 @를 통해 데코레이터 활용
+
+```python
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods, require_POST
+from .models import Article
+from .forms import ArticleForm
+
+
+@require_http_methods(["GET", "POST"])
+def create(request):
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        # 유효성 검사를 통해 안전한 데이터면 저장하라
+        if form.is_valid():
+            article = form.save()     
+            return redirect('articles:detail', article.pk)
+    else:       # 넘어오는 값이 GET 뿐만 아니라 다른  method 전주
+        form = ArticleForm()
+    # form의 2가지 모습
+    # 1. is_vaild()에서 통과하지 못한 form
+    # 2. else 구문의 form
+    # context 들여쓰기가 왜 이곳인지는 이론적으로 이해해야 한다
+    ## 내부 if분이 아닌 외부 if문의 else의 값에 대한 것이다.
+    context = {
+        'form' : form
+    }
+    return render(request, 'articles/create.html' , context)
+    
+
+
+def detail(request, pk):
+    article = Article.objects.get(pk=pk)
+    context = {
+        'article': article,
+    }
+    return render(request, 'articles/detail.html', context)
+
+@require_http_methods(["GET", "POST"])
+def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:detail', article.pk)
+    else:
+        form = ArticleForm(instance=article)
+    context = {
+        'form' : form,
+    }
+    return render(request, 'articles/update.html', context)
+
+@require_POST
+def delete(request, pk):
+    article = Article.objects.get(pk=pk)
+    article.delete()
+    return redirect('articles:detail', article.pk)
+
+```
+
+
+
+- 부트스트랩까지 적용한 Model Form의 코드
+
+``` python
+from django import forms
+from .models import Article
+
+class ArticleForm(forms.ModelForm):
+    title = forms.CharField(
+        label='제목',      
+        widget=forms.TextInput(     
+            attrs={
+                'class' : 'my-title form-control',		# from-control 클래스 추가
+                'placeholder' : 'Enter the title',
+            }
+        )
+    )
+    content = forms.CharField(
+        label='내용',
+        widget=forms.Textarea(
+            attrs={
+                'class' : 'my-content form-coltrol',
+                'placeholder' : 'Enter the content',
+                'cols' : 50,
+                'rows' : 5,
+            }
+        )
+    )
+   
+    class Meta:         
+        model = Article
+        #fields = ['title', 'content', ]
+        fields = '__all__'  
+```
+
+- create.html
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>NEW</h1>
+<form action="{% url 'articles:create' %}" method="POST">
+  {% csrf_token %}
+  <h3>V 1</h3>
+  {{form.as_p}}
+  <hr>
+
+  <h3>V 3</h3>
+  {% for field in form %}
+  <div class="form-group">
+    {{ field.label_tag }}
+    {{ field }}
+  </div>
+  {% endfor %}
+
+  <button class="btn btn-primary">작성</button>
+</form>
+{% endblock %}
+```
+
+- update.html
+
+```html
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1>UPDATE</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">
+        Submit
+      </button>
+    {% endbuttons %}  
+</form>
+{% endblock %}
+```
+
 
 
 
@@ -1124,5 +1434,66 @@ http://picsum.photos/200/300.jpg
 - 서버의 데이터나 상태를 변경시키지 않기 때문에 단순 조회(html)할 때 사용.
 - 데이터를 전송할 때 http body가 아니라 쿼리스트링을 통해 전송.(쿼리스트링 : URL 뒤쪽에 붙는 내용들)
 
+#### django bootstrap4 를 통해 느낌 내기
 
+- 구글에서 django bootstrap4 검색해서 보면 된다.
+
+- 쟝고에서의 부트스트랩 적용 관련 pip 설치
+
+  `pip install django-bootstrap4`
+
+- 설치 후 settings.py의 INSTALLED_APP 에 'bootstrap4', 를 추가해준다.
+- base.html에 load bootstrap은 필수고 사용하려는 곳에도 load는 필수다.
+
+`*{# Load the tag library #}*`
+
+`{% *load* bootstrap4 %}`
+
+``` html
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1>UPDATE</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">
+        Submit
+      </button>
+    {% endbuttons %}  
+</form>
+{% endblock %}
+```
+
+
+
+| F&Q                       | https://docs.djangoproject.com/ko/3.0/faq/general/           |
+| ------------------------- | :----------------------------------------------------------- |
+| built in tags and filters | https://docs.djangoproject.com/ko/2.1/ref/templates/builtins/#built-in-template-tags-and-filters |
+| style guide               | https://docs.djangoproject.com/ko/2.1/internals/contributing/writing-code/coding-style/ |
+| 설계 철학                 | https://docs.djangoproject.com/ko/2.1/misc/design-philosophies/#design-philosophies |
+| Template inheritance      | https://docs.djangoproject.com/ko/2.1/ref/templates/language/#template-inheritance |
+| Managing static files     | https://docs.djangoproject.com/en/2.1/howto/static-files/#managing-static-files-e-g-images-javascript-css |
+| 쿼리 만들기               | https://docs.djangoproject.com/ko/2.1/topics/db/queries/     |
+| Queryset api reference    | https://docs.djangoproject.com/ko/2.1/ref/models/querysets/#queryset-api-reference |
+| Admin site                | https://docs.djangoproject.com/ko/2.1/ref/contrib/admin/#module-django.contrib.admin |
+| Model field reference     | https://docs.djangoproject.com/ko/2.1/ref/models/fields/#module-django.db.models.fields |
+| ORM 요리책                | https://django-orm-cookbook-ko.readthedocs.io/en/latest/     |
+| shortcut functions        | https://docs.djangoproject.com/ko/2.1/topics/http/shortcuts/#module-django.shortcuts |
+| Form                      | https://docs.djangoproject.com/ko/2.1/topics/forms/#working-with-forms |
+| ModelForm                 | https://docs.djangoproject.com/ko/2.1/topics/forms/modelforms/ |
+| form fields               | https://docs.djangoproject.com/en/2.1/ref/forms/widgets/#django.forms.Widget.attrs |
+| widgets                   | https://docs.djangoproject.com/en/2.1/ref/forms/widgets/#module-django.forms.widgets |
+| view decorators           | https://docs.djangoproject.com/ko/2.1/topics/http/decorators/ |
+|                           |                                                              |
+|                           |                                                              |
+|                           |                                                              |
+| pythonic code             | https://access.redhat.com/blogs/766093/posts/2802001         |
+| 20 tips for python        | https://www.blog.duomly.com/20-essential-python-tips-and-tricks-you-should-know/ |
+| f-string                  | https://www.python.org/dev/peps/pep-0498/                    |
+| f-string                  | http://zetcode.com/python/fstring/                           |
+| class                     | https://docs.python.org/ko/3.7/tutorial/classes.html#classes |
+| emmet cheat sheet         | https://docs.emmet.io/cheat-sheet/                           |
 
