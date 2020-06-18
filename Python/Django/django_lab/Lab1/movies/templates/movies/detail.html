@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>상세 정보</h1>
+<p>{{ movie.title }} ({{movie.title_en}})</p>
+<p>{{ movie.audience }}</p>
+<p>{{ movie.open_date }}</p>
+<p>{{ movie.genre }}</p>
+<p>{{ movie.watch_grade }}</p>
+<p>{{ movie.score }}</p>
+<p>{{ movie.poster_url }}</p>
+<p>{{ movie.description }}</p>
+
+<form action="{% url 'movies:delete' movie.pk %}" method="POST">
+{% csrf_token %}
+<button class="btn-primary">삭 제</button>&nbsp;
+<a class="btn btn-primary" href="{% url 'movies:update' movie.pk %}">수 정</a>&nbsp;
+<a class="btn btn-primary" href="{% url 'movies:index' %}">목록으로</a>
+</form>
+
+{% endblock  %}

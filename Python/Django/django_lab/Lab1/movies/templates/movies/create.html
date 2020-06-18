@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>영화정보 입력</h1>
+<form action="{% url 'movies:create' %}" method="POST">
+{% csrf_token %}
+{% for field in form %}
+{% comment %} {{ field.label}} {% endcomment %}
+{{ field }}<br>
+
+{% endfor %}
+<button>작 성</button>
+</form>
+{% endblock  %}

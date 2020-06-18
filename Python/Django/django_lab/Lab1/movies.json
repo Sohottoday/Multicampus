@@ -1,0 +1,415 @@
+[
+{
+  "model": "movies.movie",
+  "pk": 1,
+  "fields": {
+    "title": "\uc778\ud130\uc2a4\ud154\ub77c",
+    "title_en": "\u3147\u3139\u3147\u3139",
+    "audience": 112,
+    "open_date": "2020-05-05",
+    "genre": "\uafc0\uc7bc",
+    "watch_grade": "15\uc138",
+    "score": 5.0,
+    "poster_url": "\u3148wwwwwww",
+    "description": "eeeeeeeeeeeeeeeeeeeee"
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 2,
+  "fields": {
+    "title": "asdfsadf",
+    "title_en": "sdfsadf",
+    "audience": 3131,
+    "open_date": "2020-05-05",
+    "genre": "\uafc0\uc7bc",
+    "watch_grade": "15\uc138",
+    "score": 4.0,
+    "poster_url": "sfasdsadf",
+    "description": "sdafsafsadf"
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 5,
+  "fields": {
+    "title": "\uc624\ub958\ub369\uc5b4\ub9ac",
+    "title_en": "sadf",
+    "audience": 333,
+    "open_date": "2020-05-05",
+    "genre": "\uafc0\uc7bc",
+    "watch_grade": "15\uc138",
+    "score": 2.3,
+    "poster_url": "sdfasfd",
+    "description": "sdfasdf"
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 14,
+  "fields": {
+    "title": "\ub0a8\uc0b0\uc758 \ubd80\uc7a5\ub4e4",
+    "title_en": "The Man Standing Next",
+    "audience": 4750104,
+    "open_date": "2020-01-22",
+    "genre": "\uafc0\uc7bc",
+    "watch_grade": "15\uc138 \uad00\ub78c\uac00",
+    "score": 4.2,
+    "poster_url": "https://w.namu.la/s/020e615ec2d6e26a600f17bf44ead2c0ea5836890a4a3dc0df79e23db2995ae5e57ef6725dea37f22416113dc1261d7dd8b9f881a5346bfa99716e225e36fc91b6c0d1650fcbb0734fc6ec5dbd4e3a462a9eb756f26527d9a145213417c7280a4b18bde8d9275c12ffa6a55e3bf7110a",
+    "description": "\uc774\uc131\ubbfc \uc774\ubcd1\ud5cc \uc5f0\uae30 \uc9c4\uc9dc \uc798\ud568!@"
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 15,
+  "fields": {
+    "title": "\ub0b4\ubd80\uc790\ub4e4",
+    "title_en": "Inside Men",
+    "audience": 7072057,
+    "open_date": "2016-03-11",
+    "genre": "\uafc0\uc7bc",
+    "watch_grade": "18\uc138 \uad00\ub78c\uac00",
+    "score": 4.5,
+    "poster_url": "https://w.namu.la/s/703a8967222f5c434a8f71f38f7bd2d0e0806941875f9fcc286d1aae4872b51cdf7779ea33bf54aaa0e21fa1fbf2245364e35a52155f8e16464736a03601e4e8328dc0d381bd0d7b58e252752dfef1e3e528c9935c0e99d42d35f4e5a5b39aa5758558a134517cf7c9e9e51f2d62aa0f",
+    "description": "\uc774\ubcd1\ud5cc \uc5f0\uae30 \uc9c0\ub824\ub530"
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 16,
+  "fields": {
+    "title": "\uc778\uc149\uc158",
+    "title_en": "Inception",
+    "audience": 5835017,
+    "open_date": "2010-07-21",
+    "genre": "\uacfc\ud559\uacf5\uc0c1",
+    "watch_grade": "12\uc138 \uad00\ub78c\uac00",
+    "score": 5.0,
+    "poster_url": "https://ww.namu.la/s/67d681d2c4c36df375c46a2c83909232a64448ea8dec10d64c239481b36520748c9d1145f3d3193ad11002ecc54b30a53313440ab632bf1b905f112db749221336bfcb74335db09c24e59274a96f6006ab849335922fe6ae3d3a4b34a441feefaa1e5170673c8e177db274875863fbf0",
+    "description": "\ud33d\uc774"
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 17,
+  "fields": {
+    "title": "\ub178\uc778\uc744 \uc704\ud55c \ub098\ub77c\ub294 \uc5c6\ub2e4",
+    "title_en": "No Country for Old Men",
+    "audience": 90023,
+    "open_date": "2008-02-21",
+    "genre": "\ubaa8\ub984",
+    "watch_grade": "18\uc138 \uad00\ub78c\uac00",
+    "score": 3.3,
+    "poster_url": "https://ww.namu.la/s/5953bcfa577953673563b2237a8ef4bd7e0127fc8893ece27f2e81e988de20bce53b85c5da6c9630b61800231d92c4e207d0604a03d44298edccbf43883563c14149211e046283c12401701522e4f23e4eda1e0f6b422978675f6641d2a39ae7",
+    "description": "\uc228\uc740 \ud574\uc11d\uc774 \uc911\uc694"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "movies",
+    "model": "movie"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add movie",
+    "content_type": 1,
+    "codename": "add_movie"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change movie",
+    "content_type": 1,
+    "codename": "change_movie"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete movie",
+    "content_type": 1,
+    "codename": "delete_movie"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view movie",
+    "content_type": 1,
+    "codename": "view_movie"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 2,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 2,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 2,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 2,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 3,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 3,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 3,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 3,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 4,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 4,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 4,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 4,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 5,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 5,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 5,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 5,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 6,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 6,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 6,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 6,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 7,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 7,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 7,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 7,
+    "codename": "view_session"
+  }
+}
+]
