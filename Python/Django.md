@@ -1469,6 +1469,18 @@ http://picsum.photos/200/300.jpg
 
 
 
+#### SQLite로 csv파일 import하기
+
+- sqlite3 db.sqlite3
+
+- .mode csv
+
+  .import [data.csv] [sqlite DB이름]
+
+
+
+
+
 | F&Q                       | https://docs.djangoproject.com/ko/3.0/faq/general/           |
 | ------------------------- | :----------------------------------------------------------- |
 | built in tags and filters | https://docs.djangoproject.com/ko/2.1/ref/templates/builtins/#built-in-template-tags-and-filters |
@@ -1496,4 +1508,7 @@ http://picsum.photos/200/300.jpg
 | f-string                  | http://zetcode.com/python/fstring/                           |
 | class                     | https://docs.python.org/ko/3.7/tutorial/classes.html#classes |
 | emmet cheat sheet         | https://docs.emmet.io/cheat-sheet/                           |
+| sqlite 설치               | https://www.notion.so/sqlite3-for-window10-b91a677740674c4abfad55409de1265e |
+
+
 
