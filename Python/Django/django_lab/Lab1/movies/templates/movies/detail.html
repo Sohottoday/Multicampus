@@ -17,6 +17,22 @@
 <button class="btn-primary">삭 제</button>&nbsp;
 <a class="btn btn-primary" href="{% url 'movies:update' movie.pk %}">수 정</a>&nbsp;
 <a class="btn btn-primary" href="{% url 'movies:index' %}">목록으로</a>
+</form><br>
+
+<form action="{% url 'movies:comment_create' movie.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button class='btn btn-primary'>작 성</button>
 </form>
+
+{% for comment in movie.comment_set.all %}
+    <div>
+    <p class="d-inline">{{comment.pk}} : {{comment.content}} / {{comment.created_at}}</p>
+    <form class="d-inline" action="{% url 'movies:comment_delete' movie.pk comment.pk %}">
+        {% csrf_token %}
+        <button class='btn btn-primary'>삭 제</button>
+    </form>
+    </div>
+{% endfor %}
 
 {% endblock  %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Movie
+from .models import Movie, Comment
 
 class MovieForm(forms.ModelForm):
     title = forms.CharField(
@@ -64,3 +64,19 @@ class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = '__all__'
+
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(
+        label='댓 글',
+        widget=forms.Textarea(
+            attrs={
+                'cols':80,
+                'rows':3,
+            }
+        )
+    )
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        exclude = ['movie', ]

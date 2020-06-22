@@ -11,3 +11,9 @@ class Movie(models.Model):
     score = models.FloatField() # 평점
     poster_url = models.TextField() # 포스터 이미지 URL
     description = models.TextField()    # 영화 소개
+
+
+class Comment(models.Model):
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
