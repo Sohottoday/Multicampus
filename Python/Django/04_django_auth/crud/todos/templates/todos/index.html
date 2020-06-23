@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="text-center">오늘의 할 일</h1>
+<hr>
+<form action="{% url 'todos:create' %}" method="POST" class="m-4">
+    {% csrf_token %}
+    {{ form }}
+    <button class="btn btn-success btn-lg">저 장</button>
+</form>
+
+<hr>
+{% comment %} 현재 로그인한 사용자 정보를 확인하여 그 사람의 글만 출력해야 한다 {% endcomment %}
+
+{% for todo in user.todo_set.all %} 
+<div class="container-md  bg-secondary text-white m-3 border-2 border-warning rounded text-monospace">
+<p>{{ todo.content }}</p>
+<p class="d-inline text-right">{{ todo.due_date }}</p>
+
+<form action="{% url 'todos:delete' todo.pk %}" method="POST" class="d-inline">
+    {% csrf_token %}
+    <button class="d-inline btn btn-danger">삭 제</button>
+</form><br>
+</div>
+{% endfor %}
+{% endblock  %}
