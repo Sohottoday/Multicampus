@@ -205,7 +205,301 @@ def delete(request, content_pk):
 
 
 
-
-
 - django user creation form 을 검색해 django 홈페이지에서 기본적으로 제공하는것들을 확인할 수 있다.
+
+
+
+### 회원가입 업그레이드
+
+- settings.py
+
+``` python
+AUTH_USER_MODEL = 'accounts.User'
+```
+
+
+
+- models.py
+
+``` python
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+# Create your models here.
+class User(AbstractUser):       # django에서는 이 부분을 처음에 정의하기를 추천한다.
+    phone = models.CharField(max_length=20)
+```
+
+
+
+- `python manage.py makemigrations`
+- `python manage.py migrate`
+
+
+
+- forms.py
+
+``` python
+from django.contrib.auth.forms import UserCreationForm
+from .models import User
+from django.contrib.auth import get_user_model
+
+# get_user_model => AUTH_USER_MODEL에 적용시킨 모델 클래스
+# User = get_user_model
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'password1', 'password2', 'phone')
+```
+
+
+
+- views.py
+
+``` python
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import CustomUserCreationForm
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
+# Create your views here.
+@login_required
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect('questions:index')
+
+    if request.method=='POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('questions:index')
+    else:
+        form = CustomUserCreationForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/form.html', context)
+
+
+@login_required
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('questions:index')
+
+    if request.method=='POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth_login(request, user)
+            return redirect('questions:index')
+    else:
+        form = AuthenticationForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/form.html', context)
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('accounts:login')
+
+```
+
+
+
+- form.html 
+- 어떤 형식으로 넘어오느냐에 따라 표현 방식이 달라지게 셋팅
+- `request.resolver_match.url_name`
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if request.resolver_match.url_name == 'signup' %}
+    <h1>회원가입</h1>
+{% else %}
+    <h1>로그인</h1>
+{% endif %}
+
+<form action="" method="POST">  
+    {% csrf_token %}
+    {{ form }}
+    <button>저 장</button>
+</form>
+{% endblock %}
+```
+
+
+
+- 1대 N에서의 코드
+
+- models.py
+
+``` python
+from django.db import models
+from django.conf import settings
+
+# Create your models here.
+class Question(models.Model):
+    title = models.CharField(max_length=100)
+    answer_a = models.CharField(max_length=100)
+    answer_b = models.CharField(max_length=100)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+class Answer(models.Model):
+    choice = models.CharField(max_length=100)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    
+```
+
+
+
+- forms.py
+
+``` python
+from django import forms
+from .models import Question, Answer
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        exclude = ('user',)
+
+
+class AnswerForm(forms.ModelForm):
+    CHOICES = [
+        ['a', 'RED'],
+        ['b', 'BLUE'],
+    ]
+
+    choice = forms.ChoiceField(choices=CHOICES)
+
+    class Meta:
+        model = Answer
+        exclude = ('user', 'question')
+```
+
+
+
+- urls.py
+
+``` python
+from django.urls import path
+from . import views
+
+app_name = 'questions'
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('create/', views.create, name='create'),
+    path('<int:question_pk>/', views.detail, name='detail'),
+    path('<int:question_pk>/answers/create/,', views.answer_create, name='answer_create'),
+]
+
+```
+
+
+
+- views.py
+
+``` python
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import QuestionForm, AnswerForm
+from .models import Question, Answer
+
+# Create your views here.
+def index(request):
+    return render(request, 'questions/index.html')
+
+
+def create(request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.user = request.user
+            question.save()
+            return redirect('questions:detail', question.pk)
+    else:
+        form = QuestionForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'questions/form.html', context)
+
+
+def detail(request, question_pk):
+    #Question = Question.objects.get(pk = question_pk)
+    question = get_object_or_404(Question, pk=question_pk)
+
+    answers = question.answer_set.all()
+    answer_a = len(answers.filter(choice='a'))
+    answer_b = answers.filter(choice='b').count()
+    
+    answer_form = AnswerForm()
+    context = {
+        'question' : question,
+        'answer_form' : answer_form,
+        'answer_a' : answer_a,
+        'answer_b' : answer_b,
+
+    }
+    return render(request, 'questions/detail.html', context)
+            
+
+def answer_create(request, question_pk):
+    question = get_object_or_404(Question, pk=question_pk)
+    form = AnswerForm(request.POST)
+    if form.is_valid():
+        answer = form.save(commit=False)
+        answer.user = request.user
+        answer.question = question
+        answer.save()
+        return redirect('questions:detail', question_pk)
+
+```
+
+
+
+- content.html
+
+``` html
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ question.title }}
+{{ question.answer_a }} or
+{{ question.answer_b }}
+
+<hr>
+
+<form action="{% url 'questions:answer_create' question.pk %}" method='POST'>
+    {% csrf_token %}
+    {{ answer_form }}
+    <button>저 장</button>
+</form>
+
+{% for answer  in question.answer_set.all %}
+    {{ answer.choice }}
+
+{% endfor %}
+    {{ answer_a }}
+    {{ answer_b }}
+
+{% endblock  %}
+```
+
+
+
+
 
