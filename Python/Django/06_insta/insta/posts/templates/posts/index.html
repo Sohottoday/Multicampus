@@ -7,4 +7,38 @@
 
   {% endfor %}
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+//1. 누구를
+  var likeButtons = document.querySelectorAll('.fa-heart')
+  //console.log(likeButtons)
+  likeButtons.forEach(function(likeButtons){
+    //console.log(likeButtons)
+    //2. 어떻게 했을때
+    likeButtons.addEventListener('click', function(event){
+      var targetId = event.target.dataset.id
+      axios.get(`/posts/${targetId}/like/`)
+      .then(function(res){
+        if(res.data.liked) {
+          // 좋아요를 누른 경우
+          event.target.style.color = 'red'
+          event.target.classList.remove('far')
+          event.target.classList.add('fas')
+        } else {
+          // 취소를 한 경우
+          event.target.style.color = 'black'
+          event.target.classList.remove('fas')
+          event.target.classList.add('far')
+        }
+      })
+      .catch()   //파이썬의 f스트링과 비슷한 형식으로 1옆의 `를 넣고 ${} 안에 변수를 넣으면 된다.
+      //then, catch = java의 try/catch와 같다.
+    })
+    // addEventListioner(~를 하면, ~를 해라)
+  })
+
+//2. 어떻게 했을때
+//3. ~~를 한다.
+</script>
 {% endblock %}

@@ -5,5 +5,6 @@ from django.contrib.auth import get_user_model
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
+        # 연결하고 싶은 모델이 들어간다.
         model = get_user_model()
-        fields = ('username', 'password1', 'password2', )
+        fields = ('username', 'password1', 'password2', 'image',)

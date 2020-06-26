@@ -30,6 +30,7 @@ class Post(models.Model):
 
     # 좋아요 버튼을 누른사람들을 저장
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')       # ManyToManyField() : 
+    # related_name을 통해 이름이 겹쳐서 충돌을 방지하고자 불러올때의 이름을 변경해 준다.
     class Meta:
         ordering = ['-id']      # 최신순으로 업데이트
 

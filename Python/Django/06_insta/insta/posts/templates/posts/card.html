@@ -1,17 +1,28 @@
 <div class="card col-5 m-3" >
   <h5 class="card-header">
     <img class="rounded-circle" src="https://gdimg.gmarket.co.kr/1653888935/still/600?ver=1588716436" width="50px", height="50px">
-    {{ post.user.username }}
+    <a href="{% url 'accounts:profile' post.user.username %}">{{ post.user.username }}</a>
   </h5>
   <img src="{{ post.image.url }}" class="card-img-top" >
   <div class="card-body">
     {% if post in user.like_posts.all %}
-      <a href="{% url 'posts:like' post.pk %}"><i class="fas fa-heart fa-2x" style="color : red"></i></a>
+      <i data-id="{{ post.id }}" class="fas fa-heart fa-2x" style="color : red"></i>
+      {% comment %} data-[이름] 이라고 주게 되면 js에서 target.dataset이라고 했을 때 딕셔너리 형식으로 뽑아낼 수 있다. {% endcomment %}
+      {% comment %} 따라서 data-id로 줬을때 event.target.dataset.id 라고 했을 때 id값을 뽑아낼 수 있다. {% endcomment %}
+      {% comment %} <a href="{% url 'posts:like' post.pk %}"><i class="fas fa-heart fa-2x" style="color : red"></i></a> {% endcomment %}
     {% else %}
-      <a href="{% url 'posts:like' post.pk %}"><i class="far fa-heart fa-2x" style="color : black"></i></a>
+      <i data-id="{{ post.id }}" class="far fa-heart fa-2x" style="color : black"></i>
+      {% comment %} <a href="{% url 'posts:like' post.pk %}"><i class="far fa-heart fa-2x" style="color : black"></i></a> {% endcomment %}
     {% endif %}
     {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
     <p class="card-text"> {{ post.content }}</p>
     <p class="card-text"> {{ post.created_at }}</p>
   </div>
+
 </div>
+<script>
+//1. 누구를
+//2. 어떻게 했을때
+//3. ~~를 한다.
+
+</script>
