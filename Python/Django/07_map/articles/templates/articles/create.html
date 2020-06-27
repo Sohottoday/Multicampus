@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<h1>NEW</h1>
+
+<div id="map" style="width:500px;height:400px;"></div>
+
+<form action="{% url 'articles:create' %}" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form form%}
+  <button class="btn btn-primary">작성</button>
+</form>
+<script>
+// 지도 그릴 공간 찾기
+var container = document.querySelector('#map'); //지도를 담을 영역의 DOM 레퍼런스
+
+// 지도 옵션 설정
+var options = { 
+	center: new kakao.maps.LatLng(33.450701, 126.570667), 
+	level: 3 
+  //draggable : false
+};
+// 지도 생성
+var map = new kakao.maps.Map(container, options); 
+var marker = new kakao.maps.Marker({ 
+   
+    position: map.getCenter() 
+}); 
+// 지도에 마커를 표시합니다
+marker.setMap(map);
+//
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+    
+    // 클릭한 위도, 경도 정보를 가져옵니다 
+    var latlng = mouseEvent.latLng; 
+    
+    // 마커 위치를 클릭한 위치로 옮깁니다
+    marker.setPosition(latlng);
+    
+    
+    var latInput = document.querySelector('#id_lat')
+    latInput.value = latlng.getLat();
+    
+    var lngInput = document.querySelector('#id_lng')
+    lngInput.value = latlng.getLng();
+    
+    //var resultDiv = document.getElementById('clickLatlng'); 
+    //resultDiv.innerHTML = message;
+    
+});
+
+
+</script>
+{% endblock %}
